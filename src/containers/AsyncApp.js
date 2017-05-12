@@ -12,10 +12,35 @@ class AsyncApp extends Component {
 
 	constructor(props){
 		super(props);
-		this.state = {}
+		this.state = {
+			tabs:[
+				{
+					name:"全部",
+					active:false
+				},
+				{
+					name:"精华",
+					active:false
+				},
+				{
+					name:"分享",
+					active:false
+				},
+				{
+					name:"问答",
+					active:false
+				},
+				{
+					name:"招聘",
+					active:false
+				}
+			],
+			tabOnList:"全部"
+		}
 
 		this.paging = this.paging.bind(this);//点击翻页
 		this.showTheTag = this.showTheTag.bind(this);
+		this.tabBgChange = this.tabBgChange.bind(this);//tab颜色变化
 	}
 
 	componentDidMount(){
@@ -31,10 +56,29 @@ class AsyncApp extends Component {
 		click(selectedTag,pagNum);//获取新页面 
 	}
 
+	//<==========tab选择==========>
+	tabBgChange(tag){
+		this.state.tabs.map((item,index)=>{
+			if(item.name === tag){
+				item.active = true;
+				this.state.tabOnList = item.name;
+				this.setState({
+					tabs:this.state.tabs,
+					tabOnList:this.state.tabOnList
+				});
+			}else{
+				item.active = false;
+				this.setState({
+					tabs:this.state.tabs
+				});
+			}
+		});
+	}
 	//分类功能
 	showTheTag(ev){
 		const { tagClick } = this.props;
 		const tagNow = ev.target.innerText;
+		this.tabBgChange(tagNow);
 		switch(tagNow){
 			case '全部':
 				tagClick('all');
@@ -72,8 +116,12 @@ class AsyncApp extends Component {
 				</div>
 				<div id="content">
 					<div className="main-content">
-						<Picker tab = {this.showTheTag} />
-						<Posts posts = {postsByCNode.posts}/>
+						<Picker tabClick = {this.showTheTag}
+								tabsStatus = {this.state.tabs}
+							 />
+						<Posts  posts = {postsByCNode.posts}
+								tabActive = {this.state.tabOnList}
+							/>
 						<Page pageNum = {pageSelected.pageNumNow}
 							  onClick = {this.paging}
 							  />

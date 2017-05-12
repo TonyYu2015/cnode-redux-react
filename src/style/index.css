@@ -14,7 +14,7 @@ body { width: 100%; background: #E1E1E1; }
 #header .main-nav li a { font-size: 13PX; display: block; padding: 10px 15px; color: #CCC; }
 #header .main-nav li a:hover { color: #fff; }
 
-#content { width: 100%; margin: 10px auto;  }
+#content { width: 100%; margin: 10px auto; overflow: hidden;  }
 #content .main-content { width: 78%; float: left; background: #fff; }
 #content .main-content .tags { overflow: hidden; padding: 10px;}
 #content .main-content .tags li { float: left; }
@@ -41,7 +41,7 @@ body { width: 100%; background: #E1E1E1; }
 
 
 #content .fun-modules { width: 20%; float: right; }
-.fun-modules .login { background: #fff; width: 300px; padding-bottom: 15px; border-radius: 20px; text-align: center; padding-top: 29px;}
+.fun-modules .login { background: #fff; width: 100%; padding-bottom: 15px; border-radius: 20px; text-align: center; padding-top: 29px;}
 .fun-modules .login p { font: 14px '微软雅黑'; color: #606060; margin-bottom: 10px; }
 .fun-modules .login .access,.fun-modules .login .btn{ border: 2px solid #606060; border-radius: 5px; height: 25px; }
 .fun-modules .login .btn{ margin-left: 15px; cursor: pointer; }

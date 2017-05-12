@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 
 class Posts extends Component {
 	render(){
+		let This = this;
 			return (
 				<ul className="lists">
 					{	this.props.posts.map(function(post,index){
@@ -12,7 +13,7 @@ class Posts extends Component {
 									<span className="reply">{post.reply_count}</span>/<span className="read">{post.visit_count}</span>
 								</span>
 								<p className="list-title">
-									<span className="good-tag">{post.tab}</span>
+									<span className="good-tag">{This.props.tabActive}</span>
 									<a className="title" href="javascript:;">{post.title}</a>
 								</p>
 								<a className="latest-update" href="javascript:;">

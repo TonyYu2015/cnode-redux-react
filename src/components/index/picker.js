@@ -1,15 +1,46 @@
 import React,{ Component } from 'react';
 
 class Picker extends Component{
+	constructor(props){
+		super(props);
+		this.state = {
+			tabs:[
+				{
+					name:"全部",
+					active:false
+				},
+				{
+					name:"精华",
+					active:false
+				},
+				{
+					name:"分享",
+					active:false
+				},
+				{
+					name:"问答",
+					active:false
+				},
+				{
+					name:"招聘",
+					active:false
+				}
+			]
+		}
+	}
+
+
 
 	render(){
 		return (
 			<ul className="tags">
-				<li><a href="javascript:;" onClick = {this.props.tab}>全部</a></li>
-				<li><a href="javascript:;" onClick = {this.props.tab}>精华</a></li>
-				<li><a href="javascript:;" onClick = {this.props.tab}>分享</a></li>
-				<li><a href="javascript:;" onClick = {this.props.tab}>问答</a></li>
-				<li><a href="javascript:;" onClick = {this.props.tab}>招聘</a></li>
+				{
+					this.props.tabsStatus.map((item,index)=>{
+						return (
+							<li key={index}><a href="javascript:;" style={{background : (item.active ? "#80BD01":"#fff"),color:(item.active ? "#fff":"#80BD01")}} onClick = {this.props.tabClick}>{item.name}</a></li>
+						);
+					})
+				}
 			</ul>
 		)
 	}
