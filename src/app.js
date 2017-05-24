@@ -1,12 +1,17 @@
+import React from 'react';
+import ReactDOM from 'react-dom';
 import thunkMiddleware from 'redux-thunk';
 import createLogger from 'redux-logger';
 import { createStore,applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
-import  rootReducer  from './reducers/reducer.js';
-import { catalogySelected,fetchPosts } from './actions/actions.js';
+import { BrowserRouter as Router,Route,Link} from "react-router-dom";
+import  rootReducer  from './redux/reducers/reducer.js';
+import { catalogySelected,fetchPosts } from './redux/actions/actions.js';
 import Async from './containers/AsyncApp.js';
-import React from 'react';
-import ReactDOM from 'react-dom';
+import PubReply from './containers/pubReply.js';
+import Topic from './containers/topic.js';
+import UnreadMessage from './containers/unreadMessage.js';
+
 
 require('./style/index.css');
 
@@ -23,10 +28,16 @@ const store = (function configureStore(preloadState){
 	);
 })();
 
-
 ReactDOM.render(
 		<Provider store={store}>
-				<Async />
+			<Router>
+				<div>
+					<Route exact path="/" component={Async}/>
+					<Route path="/topic" component={Topic}/>
+					<Route path="/unreadMessage" component={UnreadMessage}/>
+					<Route path="/pubReply" component={PubReply}/>
+				</div>
+			</Router>
 		</Provider>,
 		document.getElementById('root')
 	);

@@ -1,12 +1,12 @@
 import React,{ Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import Header from '../components/index/header.js';
-import Posts from '../components/index/posts.js';
-import Picker from '../components/index/picker.js';
-import Page from '../components/index/page.js';
-import Login from '../components/index/login.js';
-import { userLogin,getUserInfo,catalogySelected,showTag,tieziSelected,pageSelected,invalidateTiezi,fetchPostIfNeeded,getNewPageData } from '../actions/actions.js';
+import Header from '../components/header.js';
+import Posts from '../components/posts.js';
+import Picker from '../components/picker.js';
+import Page from '../components/page.js';
+import Login from '../components/login.js';
+import { userLogin,getUserInfo,catalogySelected,showTag,tieziSelected,pageSelected,invalidateTiezi,fetchPostIfNeeded,getNewPageData } from '../redux/actions/actions.js';
 
 class AsyncApp extends Component {
 
@@ -167,4 +167,4 @@ const mapDispatchProps = (dispatch)=>{
 }
 const Async = connect(mapStateToProps,mapDispatchProps)(AsyncApp);
 
-module.exports = Async;
+export default Async;
