@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from "react-router-dom";
 
 class Posts extends Component {
 	render(){
@@ -14,7 +15,7 @@ class Posts extends Component {
 								</span>
 								<p className="list-title">
 									<span className="good-tag">{This.props.tabActive}</span>
-									<a className="title" href="javascript:;">{post.title}</a>
+									<Link className="title" to={"/topic/" + post.id}>{post.title}</Link>
 								</p>
 								<a className="latest-update" href="javascript:;">
 									<img className="portrait" src={post.latestReplierImg}/>

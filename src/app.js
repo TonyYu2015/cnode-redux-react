@@ -33,7 +33,7 @@ ReactDOM.render(
 			<Router>
 				<div>
 					<Route exact path="/" component={Async}/>
-					<Route path="/topic" component={Topic}/>
+					<Route path="/topic/:id" component={Topic}/>
 					<Route path="/unreadMessage" component={UnreadMessage}/>
 					<Route path="/pubReply" component={PubReply}/>
 				</div>

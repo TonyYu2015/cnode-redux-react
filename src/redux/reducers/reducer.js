@@ -18,7 +18,6 @@ function userInfo(state={
 			return Object.assign({},state,{
 				'accseeToken' : action.access
 			});
-			break;
 		default:
 			return state;
 	}

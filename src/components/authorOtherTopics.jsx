@@ -1,7 +1,7 @@
 import React from "react";
 
 export default class AuthorOtherTopics extends React.Component{
-    constructor(prosp){
+    constructor(props){
         super(props)
     }
     
