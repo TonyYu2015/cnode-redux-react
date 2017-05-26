@@ -1,11 +1,12 @@
-var path = require('path');
+const path = require('path');
+const webpack = require('webpack');
 module.exports={
-	entry : {
-		build : './src/app.js'
-	},
+	entry : [
+		'./src/app.js'// 我们 app 的入口文件
+	],
 	output : {
 		path : './dist/',
-		filename : '[name].js'
+		filename : 'bundle.js' // 输出的打包文件
 	},
 	module : {
 		loaders : [
@@ -28,5 +29,8 @@ module.exports={
 	},
 	resolve : {
 		extensions : ['','.css','.js','.jsx']
+	},
+	devServer:{
+		historyApiFallback:true
 	}
 }

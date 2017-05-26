@@ -12,14 +12,11 @@ import { getTopicContent } from "../redux/actions/actions.js";
 class _Topic extends React.Component {
     constructor(props){
         super(props);
-
-        
     }
 
     componentDidMount(){
         const {fetchTopic,fetchPersonal} = this.props;
-        console.log(this.props.params)
-        fetchTopic(this.props.params.id);
+        fetchTopic(this.props.match.params.id);
     }
 
     render(){
@@ -34,7 +31,7 @@ class _Topic extends React.Component {
                     <div className="row">
                         <div className="col-lg-9">
                             <TopicContent content = {topicContent.data}/>
-                            <TopicReply />
+                            <TopicReply topicReplys = {topicContent.data}/>
                             <AddReply />
                         </div>
                         <div className="col-lg-3">
@@ -52,7 +49,7 @@ class _Topic extends React.Component {
 
 const mapStateToProps = (state) => {
     return {
-        topicContent : state.topicContent
+        topicContent : state.topicReducer.topicContent
     }
 }
 

@@ -5,12 +5,13 @@ import createLogger from 'redux-logger';
 import { createStore,applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
 import { BrowserRouter as Router,Route,Link} from "react-router-dom";
-import  rootReducer  from './redux/reducers/reducer.js';
+import  rootReducer  from './redux/reducers/reducerAll.js';
 import { catalogySelected,fetchPosts } from './redux/actions/actions.js';
 import Async from './containers/AsyncApp.js';
 import PubReply from './containers/pubReply.js';
 import Topic from './containers/topic.js';
 import UnreadMessage from './containers/unreadMessage.js';
+import AuthorInfo from './containers/authorInfo.js';
 
 
 require('./style/index.css');
@@ -36,6 +37,7 @@ ReactDOM.render(
 					<Route path="/topic/:id" component={Topic}/>
 					<Route path="/unreadMessage" component={UnreadMessage}/>
 					<Route path="/pubReply" component={PubReply}/>
+					<Route path="/authorInfo" component={AuthorInfo}/>
 				</div>
 			</Router>
 		</Provider>,

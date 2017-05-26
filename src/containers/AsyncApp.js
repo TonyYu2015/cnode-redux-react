@@ -52,7 +52,6 @@ class AsyncApp extends Component {
 	//点击翻页
 	paging(pagNum){ 
 		const { click,selectedTag } = this.props;
-
 		click(selectedTag,pagNum);//获取新页面 
 	}
 
@@ -139,11 +138,11 @@ class AsyncApp extends Component {
 const mapStateToProps = (state)=>{
 
 	return {
-		'postsByCNode' : state.postsByCNode,
-		'selectedTag' : state.selectedTag,
-		'pageSelected' : state.pageSelected,
-		'selectedTag' : state.selectedTag,
-		'userInfo' : state.userInfo
+		'postsByCNode' : state.appReducer.postsByCNode,
+		'selectedTag' : state.appReducer.selectedTag,
+		'pageSelected' : state.appReducer.pageSelected,
+		'selectedTag' : state.appReducer.selectedTag,
+		'userInfo' : state.appReducer.userInfo
 	}
 }
 const mapDispatchProps = (dispatch)=>{

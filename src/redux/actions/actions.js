@@ -132,14 +132,14 @@ function fetchPosts(bol){
 }
 
 function shouldFetchPosts(state){
-	const posts = state.postsByCNode.posts;
+	const posts = state.appReducer.postsByCNode.posts;
 
 	if(!posts.length){
 		return true;
-	} else if (state.postsByCNode.ifFetching){
+	} else if (state.appReducer.postsByCNode.ifFetching){
 		return false;
 	} else {
-		return state.postsByCNode.invalidate;
+		return state.appReducer.postsByCNode.invalidate;
 	}
 }
 
