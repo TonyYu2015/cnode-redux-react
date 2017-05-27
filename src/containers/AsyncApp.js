@@ -41,6 +41,7 @@ class AsyncApp extends Component {
 		this.paging = this.paging.bind(this);//点击翻页
 		this.showTheTag = this.showTheTag.bind(this);
 		this.tabBgChange = this.tabBgChange.bind(this);//tab颜色变化
+		this.login = this.login.bind(this);
 	}
 
 	componentDidMount(){
@@ -98,6 +99,10 @@ class AsyncApp extends Component {
 	}
 	//登录功能
 	login(){
+		//发起验证请求
+		const { login } = this.props;
+		const access = document.getElementById("access");
+		login(access.value);
 
 	}
 	componentWillReceiveProps(nextProps){
@@ -107,7 +112,7 @@ class AsyncApp extends Component {
 	}
 
 	render(){
-		const { postsByCNode,pageSelected } = this.props;
+		const { postsByCNode,pageSelected,userInfo} = this.props;
 		return(
 			<div>
 				<div id="header">
@@ -126,7 +131,7 @@ class AsyncApp extends Component {
 							  />
 					</div>
 					<div className="fun-modules">
-						<Login />
+						<Login click = {this.login} userInfo={userInfo}/>
 					</div>
 				</div>
 				<div id="footer"></div>
@@ -159,7 +164,6 @@ const mapDispatchProps = (dispatch)=>{
 			dispatch(getNewPageData(tag));
 		},
 		'login' : (access)=>{
-			dispatch(userLogin(access));
 			dispatch(getUserInfo(access));
 		}
 	}

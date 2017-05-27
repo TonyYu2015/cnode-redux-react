@@ -10,35 +10,43 @@ export const LOGIN_IN = "LOGIN_IN";
 export const USER_INFO = "USER_INFO";
 export const TOPIC_CONTENT = "TOPIC_CONTENT";
 
+const commonUrl = "https://cnodejs.org/api/v1";//接口共同部分
 //《==========用户登录==========》
-export function userLogin(accsee){
-	return {
-		type : LOGIN_IN,
-		access
-	}
-}
-
 function receiveUserName(data){
 	return {
 		type : USER_INFO,
 		data
 	}
-	
 }
 
-export function getUserInfo(access){
-	const url = "https://cnodejs.org/api/v1";
-
+function userInfoRight(data){
+	const url = commonUrl + "/user/" + data.loginname;
 	return (dispatch)=>{
 		dispatch(requestSend(true));
 		return fetch(url,{
-					'data' : access,
-					'Method':'POST',
-					'mode':'cors'})
-		.then((response)=>{return response.json();})
-		.then((json)=>{dispatch(receiveUserName(json));});
+			'Method':'GET',
+			'mode':'cors'
+		})
+		.then((response)=>response.json())
+		.then((json)=>dispatch(receiveUserName(json)));
 	}
+}
 
+export function getUserInfo(access){
+	const url = commonUrl + "/accesstoken";
+	console.log(access)
+	return (dispatch)=>{
+		dispatch(requestSend(true));
+		return fetch(url,{
+					'method':'POST',
+					'body':'accesstoken=' + access,
+					'headers':{
+						'Content-Type':'application/x-www-form-urlencoded'
+					}
+				})
+		.then((response)=>response.json(),(err)=>{return new Error(err)})
+		.then((json)=>dispatch(receiveUserName(json))); 
+	}
 }
 
 //《==========获取主题内容==========》

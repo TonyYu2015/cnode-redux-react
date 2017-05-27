@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux';
-import { CATALOGY_SELECTED,TIEZI_SELECTED,PAGE_SELECTED,REQUEST_SEND,RECEIVE_DATA,INVALIDATE_TIEZI,LOGIN_IN } from '../actions/actions.js';
+import { CATALOGY_SELECTED,TIEZI_SELECTED,PAGE_SELECTED,REQUEST_SEND,RECEIVE_DATA,INVALIDATE_TIEZI,LOGIN_IN,USER_INFO } from '../actions/actions.js';
 import topicReducer from './topicDetail.js';
 //标签选择
 function selectedTag(state='all',action){
@@ -11,14 +11,10 @@ function selectedTag(state='all',action){
 	}
 }
 //用户登录验证
-function userInfo(state={
-	'accseeToken' : ''
-},action){
+function userInfo(state={},action){
 	switch(action.type){
-		case LOGIN_IN:
-			return Object.assign({},state,{
-				'accseeToken' : action.access
-			});
+		case USER_INFO:
+			return Object.assign({},state,action.data);
 		default:
 			return state;
 	}
@@ -82,7 +78,8 @@ function postsByCNode(state={
 const appReducer = combineReducers({
 	selectedTag,
 	postsByCNode,
-	pageSelected
+	pageSelected,
+	userInfo
 });
 
 export default appReducer;
