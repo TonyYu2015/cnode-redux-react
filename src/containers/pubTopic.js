@@ -1,6 +1,6 @@
 import React from "react";
 import Header from "../components/header";
-import PubTopic from "../components/pubTopic";
+import TopicCatagory from "../components/topicCatagory";
 import MarkDown from "../components/markDown";
 
 export default class PubReply extends React.Component {
@@ -16,7 +16,7 @@ export default class PubReply extends React.Component {
                     <div className="row">
                         <div className="col-lg-9">
                             <div className="panel panel-default">
-                                <PubTopic />
+                                <TopicCatagory />
                                 <MarkDown />
                             </div>
                         </div>

@@ -1,6 +1,6 @@
 import React from "react";
 
-export default class PubTopic extends React.Component{
+export default class TopicCatagory extends React.Component{
     constructor(props){
         super(props)
     }

@@ -6,7 +6,7 @@ class AuthorInfo extends React.Component{
     }
 
     render(){
-
+        
     }
 }
 

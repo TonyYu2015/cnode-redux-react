@@ -1,4 +1,5 @@
 import React,{ Component } from 'react';
+import { Link } from 'react-router-dom';
 
 class Login extends Component {
 
@@ -26,8 +27,8 @@ class Login extends Component {
                                 </div>
                                 <div className="panel-body">
                                     <div className="author_info">
-                                        <a href="javascript:;"><img src={this.props.userInfo.avatar_url} alt=""/></a>
-                                        <a href="javascript:;">{this.props.userInfo.loginname}</a>
+                                        <Link to = "/authorInfo"><img src={this.props.userInfo.avatar_url} alt=""/></Link>
+                                        <Link to = "/authorInfo">{this.props.userInfo.loginname}</Link>
                                     </div>
                                     <p>积分：5</p>
                                     <p>“ 这家伙很懒，什么个性签名都没有留下。 ”</p>
@@ -35,7 +36,7 @@ class Login extends Component {
                     </div>
                     <div className="panel panel-default">
                         <div className="panel-body">
-                            <button type="button" className="btn btn-success">发布话题</button>
+                            <button type="button" className="btn btn-success"><Link to= "/pubTopic">发布话题</Link></button>
                         </div>
                     </div>
                 </div>
