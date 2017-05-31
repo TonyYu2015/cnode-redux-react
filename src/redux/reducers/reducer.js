@@ -1,5 +1,6 @@
 import { combineReducers } from 'redux';
 import { CATALOGY_SELECTED,TIEZI_SELECTED,PAGE_SELECTED,REQUEST_SEND,RECEIVE_DATA,INVALIDATE_TIEZI,LOGIN_IN } from '../actions/actions.js';
+import topicReducer from './topicDetail.js';
 //标签选择
 function selectedTag(state='all',action){
 	switch(action.type){
@@ -18,7 +19,6 @@ function userInfo(state={
 			return Object.assign({},state,{
 				'accseeToken' : action.access
 			});
-			break;
 		default:
 			return state;
 	}
@@ -79,10 +79,10 @@ function postsByCNode(state={
 	}
 }*/
 
-const rootReducer = combineReducers({
+const appReducer = combineReducers({
 	selectedTag,
 	postsByCNode,
 	pageSelected
 });
 
-export default rootReducer;
+export default appReducer;

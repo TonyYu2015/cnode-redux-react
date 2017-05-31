@@ -8,8 +8,9 @@ export const RECEIVE_DATA = "RECEIVE_DATA";
 export const INVALIDATE_TIEZI = "INVALIDATE_TIEZI";
 export const LOGIN_IN = "LOGIN_IN";
 export const USER_INFO = "USER_INFO";
+export const TOPIC_CONTENT = "TOPIC_CONTENT";
 
-//用户登录
+//《==========用户登录==========》
 export function userLogin(accsee){
 	return {
 		type : LOGIN_IN,
@@ -40,7 +41,27 @@ export function getUserInfo(access){
 
 }
 
-//获取新标签内容
+//《==========获取主题内容==========》
+export function getTopicContent(topicId){
+	const url = "https://cnodejs.org/api/v1/topic/" + topicId;
+	return (dispatch) => {
+		dispatch(requestSend(true));
+		return fetch(url,{
+					'Method':'GET',
+					'mode':'cors'})
+					.then((response) => response.json())
+					.then((json) => dispatch(receiveTopicContent(json)));
+	}
+}
+
+function receiveTopicContent(data){
+	return {
+		type:TOPIC_CONTENT,
+		data
+	}
+}
+
+//《==========获取新标签内容==========》
 export function catalogySelected(tag){
 		return	{
 					type:CATALOGY_SELECTED, 
@@ -55,7 +76,7 @@ export function tieziSelected(title){
 					title
 				}
 		}
-//分页
+//《==========分页==========》
 export function pageSelected(pageNum){
 		return	{
 					type:PAGE_SELECTED,
@@ -111,14 +132,14 @@ function fetchPosts(bol){
 }
 
 function shouldFetchPosts(state){
-	const posts = state.postsByCNode.posts;
+	const posts = state.appReducer.postsByCNode.posts;
 
 	if(!posts.length){
 		return true;
-	} else if (state.postsByCNode.ifFetching){
+	} else if (state.appReducer.postsByCNode.ifFetching){
 		return false;
 	} else {
-		return state.postsByCNode.invalidate;
+		return state.appReducer.postsByCNode.invalidate;
 	}
 }
 
