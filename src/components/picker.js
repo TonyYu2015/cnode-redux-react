@@ -24,6 +24,10 @@ class Picker extends Component{
 				{
 					name:"招聘",
 					active:false
+				},
+				{
+					name:"客户端测试区",
+					active:false
 				}
 			]
 		}

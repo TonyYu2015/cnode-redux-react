@@ -9,12 +9,16 @@ export const INVALIDATE_TIEZI = "INVALIDATE_TIEZI";
 export const LOGIN_IN = "LOGIN_IN";
 export const USER_INFO = "USER_INFO";
 export const TOPIC_CONTENT = "TOPIC_CONTENT";
+export const REPLY_INFO = "REPLY_INFO";
+export const TOPIC_PUBLISHED = "TOPIC_PUBLISHED";
+
 
 const commonUrl = "https://cnodejs.org/api/v1";//接口共同部分
 //《==========用户登录==========》
-function receiveUserName(data){
+function receiveUserName(access,data){
 	return {
 		type : USER_INFO,
+		access,
 		data
 	}
 }
@@ -34,7 +38,6 @@ function userInfoRight(data){
 
 export function getUserInfo(access){
 	const url = commonUrl + "/accesstoken";
-	console.log(access)
 	return (dispatch)=>{
 		dispatch(requestSend(true));
 		return fetch(url,{
@@ -45,7 +48,55 @@ export function getUserInfo(access){
 					}
 				})
 		.then((response)=>response.json(),(err)=>{return new Error(err)})
-		.then((json)=>dispatch(receiveUserName(json))); 
+		.then((json)=>dispatch(receiveUserName(access,json))); 
+	}
+}
+
+//《==========用户发布主题==========》
+
+function receivePubTopicInfo(data){
+	return {
+		type:TOPIC_PUBLISHED,
+		data
+	}
+}
+
+export function pubTopicRequest(access,data){
+	//'e6f04880-2ab1-4398-8178-e0898e6a8af1' 'e6f04880-2ab1-4398-8178-e0898e6a8af1'
+	return (dispatch) => {
+		dispatch(requestSend(true));
+		return fetch(commonUrl+ "/topics",{
+			'method':'POST',
+			'body':'accesstoken=' + access + '&title=' + data.title + '&tab=' + data.tab + '&content=' + data.content,
+			'headers':{
+				'Content-Type':'application/x-www-form-urlencoded'
+			}
+		})
+		.then((response)=>response.json(),(err)=>{return new Error(err)})
+		.then((json)=>dispatch(receivePubTopicInfo(json)));
+	}
+}
+
+//《==========用户发布主题评论==========》
+export function addReply(access,content,topicId){
+	return (dispatch) => {
+		dispatch(requestSend(true));
+		return fetch(commonUrl+"/topic/" + topicId + "/replies",{
+			'method':'POST',
+			'body':'accesstoken=' + access + 'content=' + content,
+			'headers':{
+				'Content-Type':'application/x-www-form-urlencoded'
+			}
+		})
+		.then((response)=>response.json(),(err)=>{return new Error(err)})
+		.then((json)=>dispatch(receiveReplyInfo(json)));
+	}
+}
+
+function receiveReplyInfo(data){
+	return {
+		type : REPLY_INFO,
+		data
 	}
 }
 

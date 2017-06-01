@@ -8,9 +8,9 @@ export default class MarkDown extends React.Component {
     render(){
         return(
             <div>
-                <div className="markdown">
-                </div>
-                <button type="button" className="btn btn-primary">提交</button>
+                <textarea className="markdown" cols="80" rows="10">
+                </textarea>
+                <button type="button" className="btn btn-primary" onClick = {this.props.click}>提交</button>
             </div>
             
         )

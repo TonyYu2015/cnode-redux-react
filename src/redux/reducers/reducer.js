@@ -11,10 +11,16 @@ function selectedTag(state='all',action){
 	}
 }
 //用户登录验证
-function userInfo(state={},action){
+function userInfo(state={
+	access:"",
+	data:""
+},action){
 	switch(action.type){
 		case USER_INFO:
-			return Object.assign({},state,action.data);
+			return Object.assign({},state,{
+				access : action.access,
+				data : action.data
+			});
 		default:
 			return state;
 	}

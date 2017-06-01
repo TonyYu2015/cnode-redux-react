@@ -1,11 +1,79 @@
 import React from "react";
+import { connect } from 'react-redux';
+import { pubTopicRequest } from '../redux/actions/actions.js'
 import Header from "../components/header";
 import TopicCatagory from "../components/topicCatagory";
 import MarkDown from "../components/markDown";
 
-export default class PubReply extends React.Component {
+class PubReply extends React.Component {
     constructor(props){
         super(props)
+        this.state = {
+            title:"",
+            tab:"",
+            content:"",
+            published:false
+        }
+        this.publishFn = this.publishFn.bind(this);
+    }
+
+    publishFn(){
+        const { publish,access } = this.props;
+
+        if(this.state.title === ""){
+            alert("标题内容不能为空哦！！！");
+            return;
+        }else if(this.state.tab === ""){
+            alert("请选择发布主题的分类！！！");
+            return;
+        }else if(this.state.content === ""){
+            alert("主题内容不能为空哦！！！");
+            return;
+        }
+
+        this.setState({
+            published:true
+        });
+        publish(access,this.state);
+    }
+
+    componentDidMount(){
+        var This = this;
+        //绑定获取标题，标签，主题内容事件
+        $(".dropdown-menu").find("li").on("click",function(ev){
+            $("#dropdownMenu1").html($(this).html());
+            var tag;
+            switch($(this).text()){
+                case '分享':
+                    tag = 'share';
+                    break;
+                case '问答':
+                    tag = 'ask';
+                    break;
+                case '招聘':
+                    tag = 'job';
+                    break;
+                case '客户端测试':
+                    tag = 'dev';
+                    break;
+            }
+            This.setState({
+                tab : tag
+            });
+        });
+
+        $(".topic-title").on("blur",function(){
+            This.setState({
+                title : $(this).val()
+            });
+        });
+
+        $(".markdown").on("blur",function(){
+            This.setState({
+                content : $(this).val()
+            });
+        });
+        
     }
 
     render(){
@@ -17,7 +85,7 @@ export default class PubReply extends React.Component {
                         <div className="col-lg-9">
                             <div className="panel panel-default">
                                 <TopicCatagory />
-                                <MarkDown />
+                                <MarkDown click = {this.publishFn}/>
                             </div>
                         </div>
                         <div className="col-lg-3">
@@ -28,3 +96,21 @@ export default class PubReply extends React.Component {
         )
     }
 }
+
+const mapStateToProps = (state) => {
+    return {
+        'success' : state.pubTopics.success,
+        'access' : state.appReducer.userInfo.access
+    }
+}
+
+const mapDispatchPorps = (dispatch) => {
+    return {
+        'publish' : (access,data) => {
+            dispatch(pubTopicRequest(access,data));
+        }
+    }
+}
+
+const PubTopic = connect(mapStateToProps,mapDispatchPorps)(PubReply);
+export default PubTopic;

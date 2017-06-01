@@ -7,16 +7,26 @@ import TopicReply from "../components/topicReply";
 import AddReply from "../components/addReply";
 import AuthorOtherTopics from "../components/authorOtherTopics";
 import ColdTopics from "../components/coldTopics";
-import { getTopicContent } from "../redux/actions/actions.js";
+import { getTopicContent,addReply } from "../redux/actions/actions.js";
 
 class _Topic extends React.Component {
     constructor(props){
         super(props);
+        this.addReply = this.addReply.bind(this);
     }
 
     componentDidMount(){
         const {fetchTopic,fetchPersonal} = this.props;
         fetchTopic(this.props.match.params.id);
+    }
+
+    addReply(){
+        const { fetchTopicReply,access } = this.props;
+        var $_contentReply = $("#reply_fn").html()//回复的内容主体
+        if(!$_contentReply){
+            alert("请输入回复内容！！！");
+        }
+        fetchTopicReply(this.props.match.params.id,access,$_contentReply);
     }
 
     render(){
@@ -32,7 +42,7 @@ class _Topic extends React.Component {
                         <div className="col-lg-9">
                             <TopicContent content = {topicContent.data}/>
                             <TopicReply topicReplys = {topicContent.data}/>
-                            <AddReply />
+                            <AddReply click = {this.addReply}/>
                         </div>
                         <div className="col-lg-3">
                             <Login />
@@ -49,7 +59,9 @@ class _Topic extends React.Component {
 
 const mapStateToProps = (state) => {
     return {
-        topicContent : state.topicReducer.topicContent
+        topicContent : state.topicReducer.topicContent,
+        topicReply : state.topicReducer.topicReply,
+        access : state.appReducer.userInfo.access
     }
 }
 
@@ -57,6 +69,9 @@ const mapDispatchProps = (dispatch) => {
     return {
         fetchTopic : (topicId) => {
             dispatch(getTopicContent(topicId));
+        },
+        fetchTopicReply:(topicId,access,content) => {
+            dispatch(addReply(access,content,topicId));
         }
     }
 }

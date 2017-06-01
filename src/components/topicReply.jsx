@@ -18,7 +18,7 @@ export default class TopicReply extends React.Component {
                         {
                             this.props.topicReplys.replies.map((item,index) => {
                                 return (<li className="list-group-item" key={index}>
-                                            <a href="javascript:;"><img src={item.author.avatar_url} alt="" /></a>
+                                            <a href="javascript:;"><img className="protrait" src={item.author.avatar_url} alt="" /></a>
                                             <div>
                                                 <p className="reply_info">
                                                     <span>{item.author.loginname}</span>

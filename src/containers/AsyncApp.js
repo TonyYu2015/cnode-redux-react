@@ -33,6 +33,10 @@ class AsyncApp extends Component {
 				{
 					name:"招聘",
 					active:false
+				},
+				{
+					name:"客户端测试",
+					active:false
 				}
 			],
 			tabOnList:"全部"
@@ -95,6 +99,9 @@ class AsyncApp extends Component {
 			case '招聘':
 				tagClick('job');
 				break;
+			case '客户端测试':
+				tagClick('dev');
+				break;
 		}
 	}
 	//登录功能
@@ -115,9 +122,7 @@ class AsyncApp extends Component {
 		const { postsByCNode,pageSelected,userInfo} = this.props;
 		return(
 			<div>
-				<div id="header">
-					<Header />
-				</div>
+				<Header />
 				<div id="content">
 					<div className="main-content">
 						<Picker tabClick = {this.showTheTag}
@@ -131,7 +136,7 @@ class AsyncApp extends Component {
 							  />
 					</div>
 					<div className="fun-modules">
-						<Login click = {this.login} userInfo={userInfo}/>
+						<Login click = {this.login} userInfo={userInfo.data}/>
 					</div>
 				</div>
 				<div id="footer"></div>
@@ -141,7 +146,6 @@ class AsyncApp extends Component {
 }
 
 const mapStateToProps = (state)=>{
-
 	return {
 		'postsByCNode' : state.appReducer.postsByCNode,
 		'selectedTag' : state.appReducer.selectedTag,
