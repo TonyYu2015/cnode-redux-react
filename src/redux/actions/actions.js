@@ -11,7 +11,9 @@ export const USER_INFO = "USER_INFO";
 export const TOPIC_CONTENT = "TOPIC_CONTENT";
 export const REPLY_INFO = "REPLY_INFO";
 export const TOPIC_PUBLISHED = "TOPIC_PUBLISHED";
-
+export const EDIT_TOPIC = "EDIT_TOPIC";
+export const TOPIC_COLLECTION = "TOPIC_COLLECTION";//主题收藏
+export const TOPIC_COLLECTION_DATA = "TOPIC_COLLECTION_DATA";
 
 const commonUrl = "https://cnodejs.org/api/v1";//接口共同部分
 //《==========用户登录==========》
@@ -53,7 +55,6 @@ export function getUserInfo(access){
 }
 
 //《==========用户发布主题==========》
-
 function receivePubTopicInfo(data){
 	return {
 		type:TOPIC_PUBLISHED,
@@ -62,7 +63,6 @@ function receivePubTopicInfo(data){
 }
 
 export function pubTopicRequest(access,data){
-	//'e6f04880-2ab1-4398-8178-e0898e6a8af1' 'e6f04880-2ab1-4398-8178-e0898e6a8af1'
 	return (dispatch) => {
 		dispatch(requestSend(true));
 		return fetch(commonUrl+ "/topics",{
@@ -72,8 +72,49 @@ export function pubTopicRequest(access,data){
 				'Content-Type':'application/x-www-form-urlencoded'
 			}
 		})
-		.then((response)=>response.json(),(err)=>{return new Error(err)})
+		.then((response)=>response.json(),(err)=>{throw new Error(err)})
 		.then((json)=>dispatch(receivePubTopicInfo(json)));
+	}
+}
+
+//《==========用户编辑主题==========》
+
+export function editTopic(bol){
+	return {
+		type:EDIT_TOPIC,
+		bol
+	}
+}
+
+// 《==========用户收藏主题==========》
+
+export function topicCollection(bol){
+	return {
+		type:TOPIC_COLLECTION,
+		bol
+	}
+}
+
+export function topicCollectionRequest(access,topic_id){
+	return (dispatch) => {
+		dispatch(requestSend(true));
+		return fetch(commonUrl + "/topic_collect/collect",{
+			'method':'POST',
+			'body':'accesstoken=' + access + '&topic_id =' + topic_id ,
+			'headers':{
+				'Content-Type':'application/x-www-form-urlencoded',
+				'Accept':'text/html'
+			}
+		})
+		.then((response)=>console.warn(response),(err)=>{throw new Error(err)})
+		.then((json)=>console.log(json));
+	}
+}
+
+function receiveCollectionInfo(data){
+	return {
+		type:TOPIC_COLLECTION_DATA,
+		data
 	}
 }
 
@@ -83,7 +124,7 @@ export function addReply(access,content,topicId){
 		dispatch(requestSend(true));
 		return fetch(commonUrl+"/topic/" + topicId + "/replies",{
 			'method':'POST',
-			'body':'accesstoken=' + access + 'content=' + content,
+			'body':'accesstoken=' + access + '&content=' + content,
 			'headers':{
 				'Content-Type':'application/x-www-form-urlencoded'
 			}

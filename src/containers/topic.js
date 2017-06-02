@@ -7,12 +7,13 @@ import TopicReply from "../components/topicReply";
 import AddReply from "../components/addReply";
 import AuthorOtherTopics from "../components/authorOtherTopics";
 import ColdTopics from "../components/coldTopics";
-import { getTopicContent,addReply } from "../redux/actions/actions.js";
+import { getTopicContent,addReply,topicCollection,topicCollectionRequest } from "../redux/actions/actions.js";
 
 class _Topic extends React.Component {
     constructor(props){
         super(props);
         this.addReply = this.addReply.bind(this);
+        this.collection = this.collection.bind(this);
     }
 
     componentDidMount(){
@@ -22,11 +23,16 @@ class _Topic extends React.Component {
 
     addReply(){
         const { fetchTopicReply,access } = this.props;
-        var $_contentReply = $("#reply_fn").html()//回复的内容主体
+        var $_contentReply = $("#reply_fn").val()//回复的内容主体
         if(!$_contentReply){
             alert("请输入回复内容！！！");
         }
         fetchTopicReply(this.props.match.params.id,access,$_contentReply);
+    }
+
+    collection(){
+        const { topicCollection,access } = this.props;
+        topicCollection(access,this.props.match.params.id);
     }
 
     render(){
@@ -40,7 +46,7 @@ class _Topic extends React.Component {
                 <div id="main" className="container-fluid">
                     <div className="row">
                         <div className="col-lg-9">
-                            <TopicContent content = {topicContent.data}/>
+                            <TopicContent content = {topicContent.data} click={this.collection}/>
                             <TopicReply topicReplys = {topicContent.data}/>
                             <AddReply click = {this.addReply}/>
                         </div>
@@ -61,7 +67,8 @@ const mapStateToProps = (state) => {
     return {
         topicContent : state.topicReducer.topicContent,
         topicReply : state.topicReducer.topicReply,
-        access : state.appReducer.userInfo.access
+        access : state.appReducer.userInfo.access,
+
     }
 }
 
@@ -72,6 +79,10 @@ const mapDispatchProps = (dispatch) => {
         },
         fetchTopicReply:(topicId,access,content) => {
             dispatch(addReply(access,content,topicId));
+        },
+        topicCollection: (access,topicId)=>{
+            dispatch(topicCollection(true));
+            dispatch(topicCollectionRequest(access,topicId));
         }
     }
 }
