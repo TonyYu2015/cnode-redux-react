@@ -7,13 +7,15 @@ import TopicReply from "../components/topicReply";
 import AddReply from "../components/addReply";
 import AuthorOtherTopics from "../components/authorOtherTopics";
 import ColdTopics from "../components/coldTopics";
-import { getTopicContent,addReply,topicCollection,topicCollectionRequest } from "../redux/actions/actions.js";
+import { getTopicContent,addReply,topicCollection,topicCollectionRequest,deleteTopic,postDelete,replyUp,postReplyUp } from "../redux/actions/actions.js";
 
 class _Topic extends React.Component {
     constructor(props){
         super(props);
         this.addReply = this.addReply.bind(this);
         this.collection = this.collection.bind(this);
+        this.deleteTopic = this.deleteTopic.bind(this);
+        this.replyUp = this.replyUp.bind(this);
     }
 
     componentDidMount(){
@@ -35,6 +37,16 @@ class _Topic extends React.Component {
         topicCollection(access,this.props.match.params.id);
     }
 
+    deleteTopic(){
+        const { deleteTopic,access } = this.props;
+        deleteTopic(access,this.props.match.params.id);
+    }
+
+    replyUp(){
+        const { replyUps,upState,access,replyId } = this.props;
+        replyUps(access,replyId);
+    }
+
     render(){
         const { topicContent } = this.props;
         // if(!topicContent && !topicContent.success){
@@ -46,8 +58,8 @@ class _Topic extends React.Component {
                 <div id="main" className="container-fluid">
                     <div className="row">
                         <div className="col-lg-9">
-                            <TopicContent content = {topicContent.data} click={this.collection}/>
-                            <TopicReply topicReplys = {topicContent.data}/>
+                            <TopicContent content = {topicContent.data} click={this.collection} delete={this.deleteTopic}/>
+                            <TopicReply topicReplys = {topicContent.data}up = {this.replyUp}/>
                             <AddReply click = {this.addReply}/>
                         </div>
                         <div className="col-lg-3">
@@ -68,7 +80,8 @@ const mapStateToProps = (state) => {
         topicContent : state.topicReducer.topicContent,
         topicReply : state.topicReducer.topicReply,
         access : state.appReducer.userInfo.access,
-
+        deleteTopic: state.topicReducer.deleteTopic.postDeleteTopic,
+        upState : state.topicReducer.replyUps.upState
     }
 }
 
@@ -83,6 +96,14 @@ const mapDispatchProps = (dispatch) => {
         topicCollection: (access,topicId)=>{
             dispatch(topicCollection(true));
             dispatch(topicCollectionRequest(access,topicId));
+        },
+        deleteTopic: (access,topicId)=>{
+            dispatch(deleteTopic(false));
+            dispatch(postDelete(access,topicId));
+        },
+        replyUps: (access,replyId) => {
+            dispatch(replyUp(true));
+            dispatch(postReplyUp(access,replyId));
         }
     }
 }

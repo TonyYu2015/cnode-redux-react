@@ -26,7 +26,7 @@ export default class TopicContent extends React.Component {
                         </div>
                         <p style = {{"paddingLeft":"10px"}}>
                             <Link to="/pubTopic"><span style = {{"margin":"0 5px"}} className="glyphicon glyphicon-edit"></span></Link>
-                            <Link to=""><span className="glyphicon glyphicon-trash"></span></Link>
+                            <Link to=""><span className="glyphicon glyphicon-trash" onClick={this.props.delete}></span></Link>
                             
                         </p>
                     </div>

@@ -23,7 +23,7 @@ export default class TopicReply extends React.Component {
                                                 <p className="reply_info">
                                                     <span>{item.author.loginname}</span>
                                                     <span>1楼.7小时前</span>
-                                                    <span className="glyphicon glyphicon-thumbs-up"></span>
+                                                    <span className="glyphicon glyphicon-thumbs-up" onClick={this.props.up}></span>
                                                     <span className="glyphicon glyphicon-share-alt"></span>
                                                 </p>
                                                 <p className="reply_content" dangerouslySetInnerHTML = {{__html:item.content}}>

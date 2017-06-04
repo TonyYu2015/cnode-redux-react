@@ -14,6 +14,10 @@ export const TOPIC_PUBLISHED = "TOPIC_PUBLISHED";
 export const EDIT_TOPIC = "EDIT_TOPIC";
 export const TOPIC_COLLECTION = "TOPIC_COLLECTION";//主题收藏
 export const TOPIC_COLLECTION_DATA = "TOPIC_COLLECTION_DATA";
+export const DELETE_TOPIC = "DELETE_TOPIC";//取消主题
+export const DELETE_TOPIC_DATA = "DELETE_TOPIC_DATA";
+export const REPLY_UP = "REPLY_UP";//评论点赞
+export const REPLY_UP_DATA = "REPLY_UP_DATA";
 
 const commonUrl = "https://cnodejs.org/api/v1";//接口共同部分
 //《==========用户登录==========》
@@ -86,6 +90,38 @@ export function editTopic(bol){
 	}
 }
 
+//《==========用户取消主题==========》
+
+export function deleteTopic(bol){
+	return {
+		type : DELETE_TOPIC,
+		bol
+	}
+}
+
+export function postDelete(access,topic_id){
+	return (dispatch) => {
+		dispatch(requestSend(true));
+		return fetch(commonUrl + "/topic_collect/de_collect",{
+			'method':'POST',
+			'body':'accesstoken=' + access + '&topic_id =' + topic_id ,
+			'headers':{
+				'Content-Type':'application/x-www-form-urlencoded',
+				'Accept':'text/html'
+			}
+		})
+		.then((response) => response.json(),(err) => {throw new Error(err)})
+		.then((json) => dispatch(receiveDeleteTopic(json)));
+	}
+}
+
+function receiveDeleteTopic(data){
+	return {
+		type : DELETE_TOPIC_DATA,
+		data
+	}
+}
+
 // 《==========用户收藏主题==========》
 
 export function topicCollection(bol){
@@ -106,7 +142,7 @@ export function topicCollectionRequest(access,topic_id){
 				'Accept':'text/html'
 			}
 		})
-		.then((response)=>console.warn(response),(err)=>{throw new Error(err)})
+		.then((response)=>response.json(),(err)=>{throw new Error(err)})
 		.then((json)=>console.log(json));
 	}
 }
@@ -137,6 +173,35 @@ export function addReply(access,content,topicId){
 function receiveReplyInfo(data){
 	return {
 		type : REPLY_INFO,
+		data
+	}
+}
+//《==========主题评论点赞==========》
+export function replyUp(bol){
+	return {
+		type : REPLY_UP,
+		bol
+	}
+}
+
+export function postReplyUp(access,reply_id){
+	return (dispatch) => {
+		dispatch(dispatch(requestSend(true)));
+		return fetch(commonUrl + "/reply/" + reply_id + "/ups",{
+			'method':'POST',
+			'body':'accesstoken=' + access,
+			'headers':{
+				'Content-Type':'application/x-www-form-urlencoded'
+			}
+		})
+		.then((response)=>response.json(),(err)=>{return new Error(err)})
+		.then((json)=>dispatch(receiveReplyUp(json)));
+	}
+}
+
+function receiveReplyUp(data){
+	return {
+		type : REPLY_UP_DATA,
 		data
 	}
 }

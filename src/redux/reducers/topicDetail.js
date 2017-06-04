@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux';
-import { TOPIC_CONTENT,REPLY_INFO,EDIT_TOPIC,TOPIC_COLLECTION_DATA,TOPIC_COLLECTION } from "../actions/actions.js";
+import { TOPIC_CONTENT,REPLY_INFO,EDIT_TOPIC,TOPIC_COLLECTION_DATA,TOPIC_COLLECTION,DELETE_TOPIC,DELETE_TOPIC_DATA,REPLY_UP,REPLY_UP_DATA } from "../actions/actions.js";
 
 //初始化主题页内容
 function topicContent(state = {},action){
@@ -34,6 +34,27 @@ function editTopic(state={
             return state;
     }
 }
+//取消主题
+function deleteTopic(state={
+    deleteTopic:false,
+    postDeleteTopic:false
+},action){
+    switch(action.type){
+        case DELETE_TOPIC:
+            return Object.assign({},state,{
+                deleteTopic:true
+            });
+        case DELETE_TOPIC_DATA:
+        console.log(action.data)
+            return Object.assign({},state,{
+                deleteTopic:false,
+                postDeleteTopic:action.data.success
+            });
+        default :
+            return state;
+    }
+}
+
 //收藏主题
 function topicCollection(state={
     collection:false,
@@ -53,11 +74,35 @@ function topicCollection(state={
             return state;
     }
 }
+//为评论点赞
+function replyUps(state={
+    replyUp:false,
+    replyUpSuccess:false,
+    upState:"down"
+},action){
+    switch(action.type){
+        case REPLY_UP:
+            return Object.assign({},state,{
+                replyUp : true
+            });
+        case REPLY_UP_DATA:
+            return Object.assign({},state,{
+                replyUp : false,
+                replyUpSuccess : action.data.success,
+                upState:action.data.action
+            });
+        default :
+            return state;
+    }
+}
+
 const topicReducer = combineReducers({
     topicContent,
     topicReply,
     editTopic,
-    topicCollection
+    topicCollection,
+    deleteTopic,
+    replyUps
 });
 
 export default topicReducer;
