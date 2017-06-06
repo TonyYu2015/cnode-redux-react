@@ -18,6 +18,8 @@ export const DELETE_TOPIC = "DELETE_TOPIC";//取消主题
 export const DELETE_TOPIC_DATA = "DELETE_TOPIC_DATA";
 export const REPLY_UP = "REPLY_UP";//评论点赞
 export const REPLY_UP_DATA = "REPLY_UP_DATA";
+export const INNER_REPLY = "INNER_REPLY";//回复评论
+export const INNER_REPLY_INFO = "INNER_REPLY_INFO";
 
 const commonUrl = "https://cnodejs.org/api/v1";//接口共同部分
 //《==========用户登录==========》
@@ -155,18 +157,18 @@ function receiveCollectionInfo(data){
 }
 
 //《==========用户发布主题评论==========》
-export function addReply(access,content,topicId){
+export function addReply(access,content,topicId,replyId){
 	return (dispatch) => {
 		dispatch(requestSend(true));
 		return fetch(commonUrl+"/topic/" + topicId + "/replies",{
 			'method':'POST',
-			'body':'accesstoken=' + access + '&content=' + content,
+			'body':'accesstoken=' + access + '&content=' + content + "&reply_id" + replyId,
 			'headers':{
 				'Content-Type':'application/x-www-form-urlencoded'
 			}
 		})
 		.then((response)=>response.json(),(err)=>{return new Error(err)})
-		.then((json)=>dispatch(receiveReplyInfo(json)));
+		.then((json)=> replyId ? dispatch(receiveInnerReplyInfo(json)) : dispatch(receiveReplyInfo(json)));
 	}
 }
 
@@ -176,6 +178,14 @@ function receiveReplyInfo(data){
 		data
 	}
 }
+
+function receiveInnerReplyInfo(data){
+	return {
+		type : INNER_REPLY_INFO,
+		data
+	}
+}
+
 //《==========主题评论点赞==========》
 export function replyUp(bol){
 	return {
@@ -203,6 +213,15 @@ function receiveReplyUp(data){
 	return {
 		type : REPLY_UP_DATA,
 		data
+	}
+}
+
+//《==========用户回复评论==========》
+export function innerReply(index,bol){
+	return {
+		type : INNER_REPLY,
+		index,
+		bol
 	}
 }
 

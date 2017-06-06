@@ -1,12 +1,32 @@
 import { combineReducers } from 'redux';
-import { TOPIC_CONTENT,REPLY_INFO,EDIT_TOPIC,TOPIC_COLLECTION_DATA,TOPIC_COLLECTION,DELETE_TOPIC,DELETE_TOPIC_DATA,REPLY_UP,REPLY_UP_DATA } from "../actions/actions.js";
+import { TOPIC_CONTENT,REPLY_INFO,EDIT_TOPIC,TOPIC_COLLECTION_DATA,TOPIC_COLLECTION,DELETE_TOPIC,DELETE_TOPIC_DATA,REPLY_UP,REPLY_UP_DATA,INNER_REPLY,INNER_REPLY_INFO } from "../actions/actions.js";
 
 //初始化主题页内容
-function topicContent(state = {},action){
+function topicContent(state = {
+},action){
     switch(action.type){
         case TOPIC_CONTENT:
-            return Object.assign({},state,
-                action.data
+            var replyStates = [];
+            var upStates = [];
+            action.data.data.replies.map((item,index)=>{
+                var flag = false;
+                var Index = index;
+                replyStates[index] = false;
+                item.ups.map((item,index)=>{
+                    if(item === "5881b3b95d4612c33919e8ce"){
+                        upStates[Index] = "up";
+                        flag = true;
+                    }
+                    if(!flag){
+                        upStates[Index] = "down";
+                    }
+                });
+            });
+            return Object.assign({},state,{
+                data : action.data.data,
+                replyStates : replyStates,
+                upStates : upStates
+            }
             );
         default:
             return state;
@@ -21,6 +41,27 @@ function topicReply(state = {},action){
             return state;
     }
 }
+//回复评论
+function innerReply(state={
+    innerReplyState : false,
+    data : {}
+},action){
+    switch(action.type){
+        case INNER_REPLY:
+            return Object.assign({},state,{
+                innerReplyState : action.bol,
+                innerReplyIndex : action.index
+            });
+        case INNER_REPLY_INFO:
+            return Object.assign({},state,{
+                innerReplyState : false,
+                data : action.data
+            });
+        default :
+            return state;
+    }
+}
+
 //编辑主题
 function editTopic(state={
     editTopic:false
@@ -77,8 +118,7 @@ function topicCollection(state={
 //为评论点赞
 function replyUps(state={
     replyUp:false,
-    replyUpSuccess:false,
-    upState:"down"
+    data: {}
 },action){
     switch(action.type){
         case REPLY_UP:
@@ -88,8 +128,7 @@ function replyUps(state={
         case REPLY_UP_DATA:
             return Object.assign({},state,{
                 replyUp : false,
-                replyUpSuccess : action.data.success,
-                upState:action.data.action
+                data : action.data
             });
         default :
             return state;
@@ -102,7 +141,8 @@ const topicReducer = combineReducers({
     editTopic,
     topicCollection,
     deleteTopic,
-    replyUps
+    replyUps,
+    innerReply
 });
 
 export default topicReducer;
