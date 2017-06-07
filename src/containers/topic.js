@@ -58,7 +58,7 @@ class _Topic extends React.Component {
     }
 
     render(){
-        const { topicContent,innerReply,innerReplyData } = this.props;
+        const { topicContent,innerReply,innerReplyData,userInfo } = this.props;
         return(
             <div>
                 <Header />
@@ -83,7 +83,7 @@ class _Topic extends React.Component {
                             <AddReply click = {this.addReply}/>
                         </div>
                         <div className="col-lg-3">
-                            <Login />
+                            <Login userInfo={userInfo.data}/>
                             <div className="ad"></div>
                             <AuthorOtherTopics />
                             <ColdTopics />
@@ -104,7 +104,8 @@ const mapStateToProps = (state) => {
         upState : state.topicReducer.replyUps.data.action,
         replies : state.topicReducer.topicContent.data &&state.topicReducer.topicContent.data.replies,
         innerReply : state.topicReducer.innerReply,
-        innerReplyData : state.topicReducer.innerReply.data
+        innerReplyData : state.topicReducer.innerReply.data,
+        userInfo : state.appReducer.userInfo
     }
 }
 

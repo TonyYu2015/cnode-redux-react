@@ -16,7 +16,7 @@ function userInfo(state={
 	data:""
 },action){
 	switch(action.type){
-		case USER_INFO:
+		case LOGIN_IN:
 			return Object.assign({},state,{
 				access : action.access,
 				data : action.data

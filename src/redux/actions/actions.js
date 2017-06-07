@@ -24,17 +24,24 @@ export const GET_MESSAGES  = "GET_MESSAGES";//获取未读和已读消息
 export const RECEIVE_MESSAGES  = "RECEIVE_MESSAGES";
 
 const commonUrl = "https://cnodejs.org/api/v1";//接口共同部分
-//《==========用户登录==========》
+//《==========用户登录/信息==========》
 function receiveUserName(access,data){
 	return {
-		type : USER_INFO,
+		type : LOGIN_IN,
 		access,
 		data
 	}
 }
 
-function userInfoRight(data){
-	const url = commonUrl + "/user/" + data.loginname;
+function receiveUserInfo(data){
+	return {
+		type : USER_INFO,
+		data
+	}
+}
+
+export function getUserInfo_AC(userName){
+	const url = commonUrl + "/user/" + userName;
 	return (dispatch)=>{
 		dispatch(requestSend(true));
 		return fetch(url,{
@@ -42,7 +49,7 @@ function userInfoRight(data){
 			'mode':'cors'
 		})
 		.then((response)=>response.json())
-		.then((json)=>dispatch(receiveUserName(json)));
+		.then((json)=>dispatch(receiveUserInfo(json)));
 	}
 }
 
