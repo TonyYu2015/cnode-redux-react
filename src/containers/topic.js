@@ -59,9 +59,6 @@ class _Topic extends React.Component {
 
     render(){
         const { topicContent,innerReply,innerReplyData } = this.props;
-        // if(!topicContent && !topicContent.success){
-        //     alert("主题无内容！！！");
-        // }
         return(
             <div>
                 <Header />
@@ -76,11 +73,9 @@ class _Topic extends React.Component {
                                 <div className="panel-body">
                                     <ul className="list-group">
                                         {
-
     topicContent.data && topicContent.data.replies.map((item,index) => {
         return <ReplySingle topicReplys = {topicContent.data} up = {this.replyUp} replyClick={this.innerReplys} replyState = {topicContent.replyStates[index]} postInnerReply = {this.addReply} _item = {item} _upState = {topicContent.upStates[index]}  key={index}/>
     })
-
                                         }
                                     </ul>
                                 </div>

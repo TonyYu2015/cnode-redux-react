@@ -20,6 +20,8 @@ export const REPLY_UP = "REPLY_UP";//评论点赞
 export const REPLY_UP_DATA = "REPLY_UP_DATA";
 export const INNER_REPLY = "INNER_REPLY";//回复评论
 export const INNER_REPLY_INFO = "INNER_REPLY_INFO";
+export const GET_MESSAGES  = "GET_MESSAGES";//获取未读和已读消息
+export const RECEIVE_MESSAGES  = "RECEIVE_MESSAGES";
 
 const commonUrl = "https://cnodejs.org/api/v1";//接口共同部分
 //《==========用户登录==========》
@@ -57,6 +59,25 @@ export function getUserInfo(access){
 				})
 		.then((response)=>response.json(),(err)=>{return new Error(err)})
 		.then((json)=>dispatch(receiveUserName(access,json))); 
+	}
+}
+//《==========获取用户消息==========》
+export function getUserMessages(access,mdrender){
+	return (dispatch) => {
+		dispatch(requestSend(true));
+		return fetch(commonUrl + "/messages?accesstoken=" + access + "&mdrender" + mdrender,{
+			"method" : "GET"
+		})
+		.then((response)=>response.json())
+		.then((json)=>dispatch(receiveMessages(json)))
+		.catch((err)=>{throw new Error(err)});
+	}
+}
+
+function receiveMessages(data){
+	return {
+		type : RECEIVE_MESSAGES,
+		data
 	}
 }
 

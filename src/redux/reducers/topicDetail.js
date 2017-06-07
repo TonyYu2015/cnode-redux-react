@@ -2,8 +2,7 @@ import { combineReducers } from 'redux';
 import { TOPIC_CONTENT,REPLY_INFO,EDIT_TOPIC,TOPIC_COLLECTION_DATA,TOPIC_COLLECTION,DELETE_TOPIC,DELETE_TOPIC_DATA,REPLY_UP,REPLY_UP_DATA,INNER_REPLY,INNER_REPLY_INFO } from "../actions/actions.js";
 
 //初始化主题页内容
-function topicContent(state = {
-},action){
+function topicContent(state = {},action){
     switch(action.type){
         case TOPIC_CONTENT:
             var replyStates = [];

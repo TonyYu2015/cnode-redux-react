@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 export default class PassMessage extends React.Component{
     constructor(props){
@@ -13,11 +14,17 @@ export default class PassMessage extends React.Component{
                 </div>
                 <div className="panel-body">
                     <ul className="list-group">
-                        <li className="list-group-item">
-                            <a href="javascript:;" className="reply_user">xux9311</a>
-                            <span>回复你的话题</span>
-                            <a href="javascript:;" className="reply_title">vscode 误点了git里面的全部清理 然后上万个文件全没了，这个有办法恢复么？</a>
-                        </li>
+                    {
+    this.props.passMessages && this.props.passMessages.map((item,index)=>{
+        return (
+            <li className="list-group-item" key={index}>
+                <a href="javascript:;" className="reply_user">{item.reply.id}</a>
+                <span>&nbsp;&nbsp;回复你的话题&nbsp;&nbsp;</span>
+                <Link to={"/topic/" + item.topic.id} className="reply_title">{item.topic.title}</Link>
+            </li>
+        )
+    })
+                    }
                     </ul>
                 </div>
             </div>
