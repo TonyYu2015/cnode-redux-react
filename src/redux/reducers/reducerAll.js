@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux';
-import appReducer from './reducer.js';
-import topicReducer from './topicDetail.js';
+import appReducer from './topicsR.js';
+import topicReducer from './topicDetailR.js';
 import pubTopics from './pubTopicReducer.js';
 import messagesCenter from './unreadMessagesReducer.js';
 import userInfoS from './userInfoR.js';

@@ -61,7 +61,7 @@ class _Topic extends React.Component {
         const { topicContent,innerReply,innerReplyData,userInfo } = this.props;
         return(
             <div>
-                <Header />
+                <Header loginStatus = {userInfo.data.success}/>
                 <div id="main" className="container-fluid">
                     <div className="row">
                         <div className="col-lg-9">
@@ -83,7 +83,7 @@ class _Topic extends React.Component {
                             <AddReply click = {this.addReply}/>
                         </div>
                         <div className="col-lg-3">
-                            <Login userInfo={userInfo.data}/>
+                            <Login userInfo={userInfo.data} loginStatus = {userInfo.loginStatus}/>
                             <div className="ad"></div>
                             <AuthorOtherTopics />
                             <ColdTopics />

@@ -22,14 +22,22 @@ export const INNER_REPLY = "INNER_REPLY";//回复评论
 export const INNER_REPLY_INFO = "INNER_REPLY_INFO";
 export const GET_MESSAGES  = "GET_MESSAGES";//获取未读和已读消息
 export const RECEIVE_MESSAGES  = "RECEIVE_MESSAGES";
+export const LOGIN_OUT = "LOGIN_OUT";//退出
 
 const commonUrl = "https://cnodejs.org/api/v1";//接口共同部分
-//《==========用户登录/信息==========》
+//《==========用户登录/退出/信息==========》
 function receiveUserName(access,data){
 	return {
 		type : LOGIN_IN,
 		access,
 		data
+	}
+}
+
+export function userLoginOut(bol){
+	return {
+		type : LOGIN_OUT,
+		bol
 	}
 }
 
@@ -65,7 +73,13 @@ export function getUserInfo(access){
 					}
 				})
 		.then((response)=>response.json(),(err)=>{return new Error(err)})
-		.then((json)=>dispatch(receiveUserName(access,json))); 
+		.then((json)=>{
+			if(!json.success){
+				alert(json.error_msg);
+			}else{
+				dispatch(receiveUserName(access,json))
+			}
+		}); 
 	}
 }
 //《==========获取用户消息==========》
@@ -274,10 +288,11 @@ function receiveTopicContent(data){
 }
 
 //《==========获取新标签内容==========》
-export function catalogySelected(tag){
+export function catalogySelected(tag,bol){
 		return	{
 					type:CATALOGY_SELECTED, 
-					tag
+					tag,
+					bol
 				}
 		}
 

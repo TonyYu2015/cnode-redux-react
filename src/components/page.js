@@ -16,8 +16,8 @@ class Page extends Component{
 	}
 	
 	componentDidMount(){
-		let oUl = document.querySelector(".pages");
-		let aA = oUl.getElementsByTagName("a");
+		let oUl = $(".pages");
+		let aA = oUl.find("a");
 		let arrA = Array.prototype.slice.call(aA);
 		this.setState({
 			aA : arrA

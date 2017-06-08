@@ -27,7 +27,11 @@ body { width: 100%; background: #E1E1E1; }
 #content .main-content .lists {  }
 #content .main-content .lists li { padding: 10px; }
 #content .main-content .lists li .author-portrait img { width: 30px; height: 30px; border-radius: 10%; vertical-align: middle; }
-#content .main-content .lists li .reply-read { text-align: center; }
+#content .main-content .lists li .reply-read { 
+    text-align: center; 
+    width: 80px;
+    display: inline-block; 
+    }
 .reply-read .reply { color: #9e78c0; }
 .reply-read .read { font-size: 10px; color: #b4b4b4; }
 #content .main-content .lists li .list-title { display: inline-block; }

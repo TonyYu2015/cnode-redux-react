@@ -12,7 +12,7 @@ function topicContent(state = {},action){
                 var Index = index;
                 replyStates[index] = false;
                 item.ups.map((item,index)=>{
-                    if(item === "5881b3b95d4612c33919e8ce"){
+                    if(item === "5881b3b95d4612c33919e8ce"){ 
                         upStates[Index] = "up";
                         flag = true;
                     }

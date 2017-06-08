@@ -6,7 +6,7 @@ import Posts from '../components/posts.js';
 import Picker from '../components/picker.js';
 import Page from '../components/page.js';
 import Login from '../components/login.js';
-import { userLogin,getUserInfo,catalogySelected,showTag,tieziSelected,pageSelected,invalidateTiezi,fetchPostIfNeeded,getNewPageData } from '../redux/actions/actions.js';
+import { userLogin,getUserInfo,catalogySelected,showTag,tieziSelected,pageSelected,invalidateTiezi,fetchPostIfNeeded,getNewPageData,userLoginOut } from '../redux/actions/actions.js';
 
 class AsyncApp extends Component {
 
@@ -38,8 +38,7 @@ class AsyncApp extends Component {
 					name:"客户端测试",
 					active:false
 				}
-			],
-			tabOnList:"全部"
+			]
 		}
 
 		this.paging = this.paging.bind(this);//点击翻页
@@ -57,7 +56,7 @@ class AsyncApp extends Component {
 	//点击翻页
 	paging(pagNum){ 
 		const { click,selectedTag } = this.props;
-		click(selectedTag,pagNum);//获取新页面 
+		click(selectedTag.tag,pagNum);//获取新页面
 	}
 
 	//<==========tab选择==========>
@@ -65,10 +64,8 @@ class AsyncApp extends Component {
 		this.state.tabs.map((item,index)=>{
 			if(item.name === tag){
 				item.active = true;
-				this.state.tabOnList = item.name;
 				this.setState({
-					tabs:this.state.tabs,
-					tabOnList:this.state.tabOnList
+					tabs:this.state.tabs
 				});
 			}else{
 				item.active = false;
@@ -85,22 +82,22 @@ class AsyncApp extends Component {
 		this.tabBgChange(tagNow);
 		switch(tagNow){
 			case '全部':
-				tagClick('all');
+				tagClick('all',false);
 				break;
 			case '精华':
-				tagClick('good');
+				tagClick('good',false);
 				break;
 			case '分享':
-				tagClick('share');
+				tagClick('share',true);
 				break;
 			case '问答':
-				tagClick('ask');
+				tagClick('ask',true);
 				break;
 			case '招聘':
-				tagClick('job');
+				tagClick('job',true);
 				break;
 			case '客户端测试':
-				tagClick('dev');
+				tagClick('dev',true);
 				break;
 		}
 	}
@@ -108,35 +105,36 @@ class AsyncApp extends Component {
 	login(){
 		//发起验证请求
 		const { login } = this.props;
-		const access = document.getElementById("access");
-		login(access.value);
-
+		const access = $("#access").val();
+		if(access === ""){
+			alert("请输入accessToken!!!");
+		}else{
+			login(access);
+		}
 	}
+
 	componentWillReceiveProps(nextProps){
-	/*	if(this.props.postsByCNode.lastUpdate != nextProps.postsByCNode.lastUpdate){
-			fetch(postsByCNode.ifFetching);
-		}*/
+
 	}
 
 	render(){
-		const { postsByCNode,pageSelected,userInfo} = this.props;
+		const { postsByCNode,pageSelected,userInfo,selectedTag,login_out} = this.props;
 		return(
 			<div>
-				<Header />
-				<div id="content">
+				<Header loginStatus = {userInfo.loginStatus} login_out={login_out}/>
+				<div id="content" style={{padding:"20px"}}>
 					<div className="main-content">
 						<Picker tabClick = {this.showTheTag}
 								tabsStatus = {this.state.tabs}
 							 />
-						<Posts  posts = {postsByCNode.posts}
-								tabActive = {this.state.tabOnList}
+						<Posts  posts = {postsByCNode.posts} bol = {selectedTag.bol}
 							/>
 						<Page pageNum = {pageSelected.pageNumNow}
 							  onClick = {this.paging}
 							  />
 					</div>
 					<div className="fun-modules">
-						<Login click = {this.login} userInfo={userInfo.data}/>
+						<Login click = {this.login} userInfo={userInfo.data} loginStatus = {userInfo.loginStatus}/>
 					</div>
 				</div>
 				<div id="footer"></div>
@@ -163,12 +161,15 @@ const mapDispatchProps = (dispatch)=>{
 			dispatch(pageSelected(num));
 			dispatch(getNewPageData(tag,num));
 		},
-		'tagClick' : (tag)=>{
-			dispatch(catalogySelected(tag));
+		'tagClick' : (tag,bol)=>{
+			dispatch(catalogySelected(tag,bol));
 			dispatch(getNewPageData(tag));
 		},
 		'login' : (access)=>{
 			dispatch(getUserInfo(access));
+		},
+		'login_out' : (bol) => {
+			dispatch(userLoginOut(bol));
 		}
 	}
 }

@@ -20,7 +20,7 @@ class _UnreadMessage extends React.Component{
         const { messages,userInfo } = this.props;
         return(
             <div>
-                <Header />
+                <Header loginStatus = {userInfo.data.success}/>
                 <div id="main" className="container-fluid">
                     <div className="row">
                         <div className="col-lg-9">
@@ -28,7 +28,7 @@ class _UnreadMessage extends React.Component{
                             <PassMessage passMessages = {messages &&  messages.has_read_messages}/>
                         </div>
                         <div className="col-lg-3">
-                            <Login userInfo={userInfo.data}/>
+                            <Login userInfo={userInfo.data} loginStatus = {userInfo.loginStatus}/>
                         </div>
                     </div>
                 </div>

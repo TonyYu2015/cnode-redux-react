@@ -99,9 +99,10 @@ class PubReply extends React.Component {
     }
 
     render(){
+        const { userInfo,login_out } = this.props;
         return(
             <div>
-                <Header />
+                <Header loginStatus = {userInfo.data.success} login_out={login_out}/>
                 <div id="main" className="container-fluid">
                     <div className="row">
                         <div className="col-lg-9">
@@ -124,7 +125,8 @@ const mapStateToProps = (state) => {
         'success' : state.pubTopics.success,
         'access' : state.appReducer.userInfo.access,
         'editTopic' : state.topicReducer.editTopic,
-        'topicContent':state.topicReducer.topicContent
+        'topicContent':state.topicReducer.topicContent,
+        'userInfo' : state.appReducer.userInfo
     }
 }
 

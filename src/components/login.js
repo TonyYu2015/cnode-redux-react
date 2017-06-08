@@ -18,16 +18,16 @@ class Login extends Component {
     }
 
     render(){
-        if(this.props.userInfo && this.props.userInfo.success){
+        if(this.props.userInfo && this.props.loginStatus){
             return (
                 <div>
                     <div className="panel panel-default">
                                 <div className="panel-heading">
-                                    <h3 className="panel-title">作者</h3>
+                                    <h3 className="panel-title">个人信息</h3>
                                 </div>
                                 <div className="panel-body">
                                     <div className="author_info">
-                                        <Link to = "/authorInfo"><img src={this.props.userInfo.avatar_url} alt=""/></Link>
+                                        <Link to = "/authorInfo"><img src={this.props.userInfo.avatar_url} width="50px" alt=""/></Link>
                                         <Link to = "/authorInfo">{this.props.userInfo.loginname}</Link>
                                     </div>
                                     <p>积分：5</p>
