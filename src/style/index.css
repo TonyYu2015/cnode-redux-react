@@ -1,7 +1,7 @@
 body,ul,li,p,a,img,span { margin: 0; padding: 0; }
 li { list-style: none; }
 a { text-decoration: none; color: #000; cursor: pointer;}
-img { border: none; }
+img { border: none; max-width:100%; }
 
 body { width: 100%; background: #E1E1E1; }
 /*全局*/

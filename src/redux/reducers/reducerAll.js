@@ -1,16 +1,16 @@
 import { combineReducers } from 'redux';
-import appReducer from './topicsR.js';
-import topicReducer from './topicDetailR.js';
+import topics from './topics.js';
+import topic from './topicDetail.js';
 import pubTopics from './pubTopicReducer.js';
 import messagesCenter from './unreadMessagesReducer.js';
-import userInfoS from './userInfoR.js';
+import userInfo from './login.js';
 
 const rootReducer = combineReducers({
-    appReducer,
-    topicReducer,
+    topics,
+    topic,
     pubTopics,
     messagesCenter,
-    userInfoS
+    userInfo
 });
 
 export default rootReducer;

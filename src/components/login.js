@@ -18,7 +18,7 @@ class Login extends Component {
     }
 
     render(){
-        if(this.props.userInfo && this.props.loginStatus){
+        if(this.props.loginData && this.props.loginStatus){
             return (
                 <div>
                     <div className="panel panel-default">
@@ -27,8 +27,8 @@ class Login extends Component {
                                 </div>
                                 <div className="panel-body">
                                     <div className="author_info">
-                                        <Link to = "/authorInfo"><img src={this.props.userInfo.avatar_url} width="50px" alt=""/></Link>
-                                        <Link to = "/authorInfo">{this.props.userInfo.loginname}</Link>
+                                        <Link to = "/authorInfo"><img src={this.props.loginData.avatar_url} width="50px" alt=""/></Link>
+                                        <Link to = "/authorInfo">{this.props.loginData.loginname}</Link>
                                     </div>
                                     <p>积分：5</p>
                                     <p>“ 这家伙很懒，什么个性签名都没有留下。 ”</p>

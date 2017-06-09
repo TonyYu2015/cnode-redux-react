@@ -247,14 +247,15 @@ export function postReplyUp(access,reply_id){
 			}
 		})
 		.then((response)=>response.json(),(err)=>{return new Error(err)})
-		.then((json)=>dispatch(receiveReplyUp(json)));
+		.then((json)=>dispatch(receiveReplyUp(json,reply_id)));
 	}
 }
 
-function receiveReplyUp(data){
+function receiveReplyUp(data,id){
 	return {
 		type : REPLY_UP_DATA,
-		data
+		data,
+		id
 	}
 }
 
@@ -359,14 +360,14 @@ function fetchPosts(bol){
 }
 
 function shouldFetchPosts(state){
-	const posts = state.appReducer.postsByCNode.posts;
+	const posts = state.topics.posts;
 
 	if(!posts.length){
 		return true;
-	} else if (state.appReducer.postsByCNode.ifFetching){
+	} else if (state.topics.ifFetching){
 		return false;
 	} else {
-		return state.appReducer.postsByCNode.invalidate;
+		return state.topics.invalidate;
 	}
 }
 

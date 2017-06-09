@@ -14,8 +14,8 @@ export default class ReplySingle extends React.Component {
                     <p className="reply_info">
                         <span>{this.props._item.author.loginname}</span>
                         <span>1楼.7小时前</span>
-                        <span className="glyphicon glyphicon-thumbs-up replyUp" style={{"color":this.props._upState === "up" ? "red" : "none"}} onClick={this.props.up}></span>
-                        <span className="glyphicon glyphicon-share-alt" onClick={this.props.replyClick}></span>
+                        <span style={{"float":"right"}} className="glyphicon glyphicon-share-alt" onClick={this.props.replyClick}></span>
+                        <span className="glyphicon glyphicon-thumbs-up replyUp" style={{"color":this.props.like ? "red" : "none","float":"right"}} onClick={this.props.up}></span>
                     </p>
                     <p className="reply_content" dangerouslySetInnerHTML = {{__html:this.props._item.content}}>
                     </p>

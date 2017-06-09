@@ -63,13 +63,13 @@ class Posts extends Component {
 								<span className="reply-read">
 									<span className="reply">{post.reply_count}</span>/<span className="read">{post.visit_count}</span>
 								</span>
-								<p className="list-title">
+								<p className="list-title" style={{"width":"80%"}}>
 									{
 									tabs.map((item,index)=>{
 										return <span style={{"background":item.bg,"color":item.color,"marginRight":"5px"}} className="good-tag" key={index}>{item.tabName}</span>
 									})
 									}
-									<Link className="title" to={"/topic/" + post.id}>{post.title}</Link>
+									<Link className="title" to={"/topic/" + post.id} style={{"display":"inline-block","width":"70%","overflow":"hidden","whiteSpace":"nowrap","textOverflow":"ellipsis"}}>{post.title}</Link>
 								</p>
 								<a className="latest-update" href="javascript:;">
 									<span className="time">最后回复时间：{post.last_reply_at.match(/\d{4}-\d{2}-\d{2}/g)}</span>

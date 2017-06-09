@@ -1,39 +1,24 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import thunkMiddleware from 'redux-thunk';
-import createLogger from 'redux-logger';
-import { createStore,applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
 import { BrowserRouter as Router,Route,Link} from "react-router-dom";
-import  rootReducer  from './redux/reducers/reducerAll.js';
+
 import { catalogySelected,fetchPosts } from './redux/actions/actions.js';
-import Async from './containers/AsyncApp.js';
+import Home from './containers/home.js';
 import PubTopic from './containers/pubTopic.js';
 import Topic from './containers/topic.js';
 import UnreadMessage from './containers/unreadMessage.js';
 import AuthorInfo from './containers/authorInfo.js';
 
+import store from './redux/store/configureStore.js';
 
 require('./style/index.css');
-
-var loggerMiddleware = createLogger();
-
-const store = (function configureStore(preloadState){
-	return createStore(
-		rootReducer,
-		preloadState,
-		applyMiddleware(
-			thunkMiddleware,
-			loggerMiddleware
-		)
-	);
-})();
 
 ReactDOM.render(
 		<Provider store={store}>
 			<Router>
 				<div>
-					<Route exact path="/" component={Async}/>
+					<Route exact path="/" component={Home}/>
 					<Route path="/topic/:id" component={Topic}/>
 					<Route path="/unreadMessage" component={UnreadMessage}/>
 					<Route path="/pubTopic" component={PubTopic}/>
