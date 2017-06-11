@@ -1,14 +1,17 @@
-import { combineReducers } from 'redux';
-import {TOPIC_PUBLISHED} from '../actions/actions.js';
+import {TOPIC_PUBLISH} from '../actions/actions.js';
+import {EDIT_TOPIC} from '../actions/actions.js';
 
 function pubTopic(state={
-    success : false,
-    topic_id : ""
 },action){
     switch(action.type){
-        case TOPIC_PUBLISHED:
+        case TOPIC_PUBLISH:
             return Object.assign({},state,{
-                success : action.data.success,
+                topicStatus : "pub",
+                data : action.data
+            });
+        case EDIT_TOPIC:
+            return Object.assign({},state,{
+                topicStatus : "edit",
                 topic_id : action.data.topic_id
             });
         default :
@@ -16,8 +19,4 @@ function pubTopic(state={
     }
 }
 
-const pubTopics = combineReducers({
-    pubTopic
-});
-
-export default pubTopics;
+export default pubTopic;

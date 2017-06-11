@@ -19,7 +19,7 @@ function userInfo(state=initializeState,action){
 			});
         case USER_INFO:
             return Object.assign({},state,{
-                data : action.data
+                data : action.data.data
             });
 		default:
 			return state;

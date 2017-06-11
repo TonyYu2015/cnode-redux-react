@@ -10,7 +10,7 @@ export const LOGIN_IN = "LOGIN_IN";
 export const USER_INFO = "USER_INFO";
 export const TOPIC_CONTENT = "TOPIC_CONTENT";
 export const REPLY_INFO = "REPLY_INFO";
-export const TOPIC_PUBLISHED = "TOPIC_PUBLISHED";
+export const TOPIC_PUBLISH = "TOPIC_PUBLISH";
 export const EDIT_TOPIC = "EDIT_TOPIC";
 export const TOPIC_COLLECTION = "TOPIC_COLLECTION";//主题收藏
 export const TOPIC_COLLECTION_DATA = "TOPIC_COLLECTION_DATA";
@@ -102,11 +102,18 @@ function receiveMessages(data){
 	}
 }
 
-//《==========用户发布主题==========》
+//《==========用户发布/编辑主题==========》
 function receivePubTopicInfo(data){
 	return {
-		type:TOPIC_PUBLISHED,
+		type:TOPIC_PUBLISH,
 		data
+	}
+}
+
+export function editTopic(bol){
+	return {
+		type:EDIT_TOPIC,
+		bol
 	}
 }
 
@@ -125,16 +132,7 @@ export function pubTopicRequest(access,data){
 	}
 }
 
-//《==========用户编辑主题==========》
-
-export function editTopic(bol){
-	return {
-		type:EDIT_TOPIC,
-		bol
-	}
-}
-
-//《==========用户取消主题==========》
+//《==========用户删除主题==========》
 
 export function deleteTopic(bol){
 	return {
@@ -155,7 +153,8 @@ export function postDelete(access,topic_id){
 			}
 		})
 		.then((response) => response.json(),(err) => {throw new Error(err)})
-		.then((json) => dispatch(receiveDeleteTopic(json)));
+		.then((json) => dispatch(receiveDeleteTopic(json)))
+		.catch(err => {throw err});
 	}
 }
 
@@ -187,7 +186,8 @@ export function topicCollectionRequest(access,topic_id){
 			}
 		})
 		.then((response)=>response.json(),(err)=>{throw new Error(err)})
-		.then((json)=>console.log(json));
+		.then((json)=>console.log(json))
+		.catch(err =>{ throw err });
 	}
 }
 
@@ -200,11 +200,13 @@ function receiveCollectionInfo(data){
 
 //《==========用户发布主题评论==========》
 export function addReply(access,content,topicId,replyId){
+	let values = replyId ? `accesstoken=${access}&content=${content}&reply_id=${replyId}` : `accesstoken=${access}&content=${content}`;
+ 	 
 	return (dispatch) => {
 		dispatch(requestSend(true));
 		return fetch(commonUrl+"/topic/" + topicId + "/replies",{
 			'method':'POST',
-			'body':'accesstoken=' + access + '&content=' + content + "&reply_id" + replyId,
+			'body':values,
 			'headers':{
 				'Content-Type':'application/x-www-form-urlencoded'
 			}
@@ -260,10 +262,10 @@ function receiveReplyUp(data,id){
 }
 
 //《==========用户回复评论==========》
-export function innerReply(index,bol){
+export function innerReply(replyId,bol){
 	return {
 		type : INNER_REPLY,
-		index,
+		replyId,
 		bol
 	}
 }

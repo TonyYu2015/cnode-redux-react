@@ -41,9 +41,9 @@ class Home extends Component {
 			]
 		}
 
-		this.paging = this.paging.bind(this);//点击翻页
+		this.paging = this.paging.bind(this);
 		this.showTheTag = this.showTheTag.bind(this);
-		this.tabBgChange = this.tabBgChange.bind(this);//tab颜色变化
+		this.tabBgChange = this.tabBgChange.bind(this);
 		this.login = this.login.bind(this);
 	}
 
@@ -59,7 +59,7 @@ class Home extends Component {
 		click(selectedTag.tag,pagNum);//获取新页面
 	}
 
-	//<==========tab选择==========>
+	//tab选择
 	tabBgChange(tag){
 		this.state.tabs.map((item,index)=>{
 			if(item.name === tag){
@@ -113,10 +113,6 @@ class Home extends Component {
 		}
 	}
 
-	componentWillReceiveProps(nextProps){
-
-	}
-
 	render(){
 		const { posts,pageNumNow,userInfo,selectedTag,login_out} = this.props;
 		return(
@@ -137,6 +133,7 @@ class Home extends Component {
 						<Login 	click = {this.login} 
 								loginData={userInfo.loginData} 
 								loginStatus = {userInfo.loginStatus}
+								personal = { true }
 						/>
 					</div>
 				</div>
@@ -157,21 +154,21 @@ const mapStateToProps = (state)=>{
 }
 const mapDispatchProps = (dispatch)=>{
 	return {
-		'fetch' : (bol)=>{
+		'fetch' : (bol)=>{//获取主题列表
 			dispatch(fetchPostIfNeeded(bol));
 		},
-		'click' : (tag,num)=>{
+		'click' : (tag,num)=>{//选择页数
 			dispatch(pageSelected(num));
 			dispatch(getNewPageData(tag,num));
 		},
-		'tagClick' : (tag,bol)=>{
+		'tagClick' : (tag,bol)=>{//选择标签
 			dispatch(catalogySelected(tag,bol));
 			dispatch(getNewPageData(tag));
 		},
-		'login' : (access)=>{
+		'login' : (access)=>{//登录
 			dispatch(getUserInfo(access));
 		},
-		'login_out' : (bol) => {
+		'login_out' : (bol) => {//登出
 			dispatch(userLoginOut(bol));
 		}
 	}

@@ -5,22 +5,24 @@ import Header from "../components/header";
 import Login from "../components/login";
 import { getUserInfo_AC } from "../redux/actions/actions.js";
 
-class _AuthorInfo extends React.Component{
+class AuthorInfo extends React.Component{
     constructor(props){
         super(props)
     }
 
     componentDidMount(){
-        const { getUserInfo,userInfo } = this.props;
-        getUserInfo(userInfo.data.loginname);
+        const { getUserInfo } = this.props;
+        var searchStr = this.props.location.search
+        var userName = searchStr.substr(searchStr.indexOf("=")+1);
+        getUserInfo(userName);
     }
 
     render(){
-        const { userInfo,userPersonalInfo,login_out } = this.props;
-        if(!userPersonalInfo.success) return null;
+        const { userInfo,login_out } = this.props;
+        if(!userInfo.data) return null;
         return (
             <div>
-                <Header loginStatus = {userInfo.data.success} login_out={login_out}/>
+                <Header loginStatus = {userInfo.loginStatus} login_out={login_out}/>
                 <div className = "container-fluid">
                     <div className="row">
                         <div className="col-lg-9">
@@ -28,12 +30,12 @@ class _AuthorInfo extends React.Component{
                                 <div className="panel-heading">主页/</div>
                                 <div className="panel-body">
                                     <p>
-                                        <span><img src={userPersonalInfo.data.avatar_url} width="50px" alt=""/></span>
-                                        <span>{userPersonalInfo.data.loginname}</span>
+                                        <span><img src={userInfo.data.avatar_url} width="50px" alt=""/></span>
+                                        <span>{userInfo.data.loginname}</span>
                                     </p>
-                                    <p>{userPersonalInfo.data.score}&nbsp;积分</p>
-                                    <p>{userPersonalInfo.data.githubUsername}</p>
-                                    <p>{userPersonalInfo.data.create_at}</p>
+                                    <p>{userInfo.data.score}&nbsp;积分</p>
+                                    <p>{userInfo.data.githubUsername}</p>
+                                    <p>{userInfo.data.create_at}</p>
                                 </div>
                             </div>
                             <div className="panel panel-default">
@@ -41,7 +43,7 @@ class _AuthorInfo extends React.Component{
                                 <div className="panel-body">
                                     <ul className="list-group">
                                         {
-        userPersonalInfo.data.recent_topics.map((item,index)=>{
+        userInfo.data.recent_topics.map((item,index)=>{
             return (
                 <li className="list-group-item" key={index}>
                     <span className="badge">
@@ -69,7 +71,7 @@ class _AuthorInfo extends React.Component{
                                 <div className="panel-body">
                                     <ul className="list-group">
                                         {
-        userPersonalInfo.data.recent_replies.map((item,index)=>{
+        userInfo.data.recent_replies.map((item,index)=>{
             return (
                 <li className="list-group-item" key={index}>
                     <span className="badge">
@@ -93,7 +95,7 @@ class _AuthorInfo extends React.Component{
                             </div>
                         </div>
                         <div className="col-lg-3">
-                            <Login userInfo={userInfo.data} loginStatus = {userInfo.loginStatus}/>
+                            <Login userInfo={userInfo.data}/>
                         </div>
                     </div>
                 </div>
@@ -104,8 +106,7 @@ class _AuthorInfo extends React.Component{
 
 const mapStateToProps = (state) => {
     return {
-        userInfo : state.appReducer.userInfo,
-        userPersonalInfo : state.userInfoS.userInfo
+        userInfo : state.userInfo
     }
 }
 
@@ -117,6 +118,4 @@ const mapDispatchProps = (dispatch) => {
     }
 }
 
-const AuthorInfo = connect(mapStateToProps,mapDispatchProps)(_AuthorInfo)
-
-export default AuthorInfo;
+export default connect(mapStateToProps,mapDispatchProps)(AuthorInfo);

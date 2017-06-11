@@ -59,7 +59,8 @@ class Posts extends Component {
 
 						return(
 							<li key={index}>
-								<a className="author-portrait" href="javascript:;"><img src={post.author.avatar_url}/></a>
+								<Link 	className="author-portrait" 
+										to = {"/authorInfo?userName=" + post.author.loginname}><img src={post.author.avatar_url}/></Link>
 								<span className="reply-read">
 									<span className="reply">{post.reply_count}</span>/<span className="read">{post.visit_count}</span>
 								</span>
@@ -69,7 +70,7 @@ class Posts extends Component {
 										return <span style={{"background":item.bg,"color":item.color,"marginRight":"5px"}} className="good-tag" key={index}>{item.tabName}</span>
 									})
 									}
-									<Link className="title" to={"/topic/" + post.id} style={{"display":"inline-block","width":"70%","overflow":"hidden","whiteSpace":"nowrap","textOverflow":"ellipsis"}}>{post.title}</Link>
+									<Link className="title" to={"/topic?topicId=" + post.id} style={{"display":"inline-block","width":"70%","overflow":"hidden","whiteSpace":"nowrap","textOverflow":"ellipsis"}}>{post.title}</Link>
 								</p>
 								<a className="latest-update" href="javascript:;">
 									<span className="time">最后回复时间：{post.last_reply_at.match(/\d{4}-\d{2}-\d{2}/g)}</span>

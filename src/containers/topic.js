@@ -4,7 +4,6 @@ import Header from "../components/header";
 import Login from "../components/login";
 import TopicContent from "../components/topicContent";
 import ReplySingle from "../components/replySingle.jsx";
-// import TopicReply from "../components/topicReply";
 import AddReply from "../components/addReply";
 import AuthorOtherTopics from "../components/authorOtherTopics";
 import ColdTopics from "../components/coldTopics";
@@ -13,6 +12,9 @@ import { getTopicContent,addReply,topicCollection,topicCollectionRequest,deleteT
 class Topic extends React.Component {
     constructor(props){
         super(props);
+        this.state = {
+            topicId : null
+        }
         this.addReply = this.addReply.bind(this);
         this.collection = this.collection.bind(this);
         this.deleteTopic = this.deleteTopic.bind(this);
@@ -21,61 +23,77 @@ class Topic extends React.Component {
     }
 
     componentDidMount(){
-        const {fetchTopic,fetchPersonal,topicContent} = this.props;
-        fetchTopic(this.props.match.params.id);
+        const {fetchTopic} = this.props;
+        var searchStr = this.props.location.search;
+        var topicId = searchStr.substr(searchStr.indexOf("=")+1);
+        this.setState({
+            topicId : topicId
+        });
+        fetchTopic(topicId);
     }
 
-    componentWillReceiveProps(nextProps){
-
-    }
-
-    componentShouldUpdata(nextProps){
-
-    }
-
-    
-
-    addReply(){//添加回复
-        const { fetchTopicReply,access,innerReply,replies } = this.props;
-        var $_contentReply = innerReply ? $(".markdown").val : $("#reply_fn").val()//回复的内容主体
+    addReply(ev){//添加回复
+        const { fetchTopicReply,access,isInnerReply,replies } = this.props;
+        var $_contentReply = isInnerReply ? $(".markdown").text() : $("#reply_fn").val()//回复的内容主体
         var index = $(".replies").index(ev.target);//回复的索引
+        var replyId = index === -1 ? null : replies[index].id;
         if(!$_contentReply){
             alert("请输入回复内容！！！");
+            return;
         }
-        fetchTopicReply(this.props.match.params.id,access,$_contentReply,replies[index].id);
+        fetchTopicReply(access,$_contentReply,this.state.topicId,replyId);
+        
     }
 
     collection(){//收藏主题
         const { topicCollection,access } = this.props;
-        topicCollection(access,this.props.match.params.id);
+        topicCollection(access,this.state.topicId);
     }
 
     deleteTopic(){//删除主题
         const { deleteTopic,access } = this.props;
-        deleteTopic(access,this.props.match.params.id);
+        deleteTopic(access,this.state.topicId);
     }
 
     replyUp(ev){//给评论点赞
-        const { replyUps,upState,access,replies } = this.props;
+        const { replyUps,access,replies,likes } = this.props;
+        console.log(JSON.parse(JSON.stringify(likes)));
         var index = $(".replyUp").index(ev.target);
         replyUps(access,replies[index].id);
     }
 
     innerReplys(ev){//回复评论
-        const { innerReply } = this.props;
-        var index = $(".replies").index(ev.target);//回复的索引
-        innerReply(index,true);
+        const { innerReply,replies,innerReplyStatus } = this.props;
+        var index = $(".innerReplyBtn").index(ev.target);//回复的索引
+        var f;
+        if(innerReplyStatus){
+            f = innerReplyStatus[replies[index].id];
+        }else{
+            f = false;
+        }
+        innerReply(replies[index].id,!f);
     }
 
     render(){
-        const { topicContent,innerReply,innerReplyData,userInfo,likes } = this.props;
+        const { topicContent,innerReply,innerReplyData,userInfo,likes,login_out,innerReplyStatus } = this.props;
+
+        let editAndDelete = false;
+        if(userInfo.loginStatus && topicContent){
+            editAndDelete = topicContent.author_id === userInfo.loginData.id;
+        }
+
         return(
             <div>
-                <Header loginStatus = {userInfo.success}/>
+                <Header loginStatus = {userInfo.loginStatus} login_out={login_out}/>
                 <div id="main" className="container-fluid">
                     <div className="row">
                         <div className="col-lg-9">
-                            <TopicContent content = {topicContent} click={this.collection} delete={this.deleteTopic}/>
+                            <TopicContent   content = {topicContent} 
+                                            click={this.collection} 
+                                            delete={this.deleteTopic} 
+                                            loginStatus = {userInfo.loginStatus}
+                                            editAndDelete = { editAndDelete }
+                            />
                             <div className="panel panel-default">
                                 <div className="panel-heading">
                                     <h3 className="panel-title">{topicContent && topicContent.replies.length}&nbsp;回复</h3>
@@ -83,27 +101,28 @@ class Topic extends React.Component {
                                 <div className="panel-body">
                                     <ul className="list-group">
                                         {
-                            topicContent && topicContent.replies.map((item,index) => {
-                                return <ReplySingle topicReplys = {topicContent.data} 
-                                                    up = {this.replyUp} 
-                                                    replyClick={this.innerReplys}
-                                                    postInnerReply = {this.addReply} 
-                                                    _item = {item}
-                                                    like = {likes[item.id]}
-                                                    key={index}/>
-                            })
+            topicContent && topicContent.replies.map((item,index) => {
+                return <ReplySingle topicReplys = {topicContent.data} 
+                                    loginStatus = {userInfo.loginStatus}
+                                    up = {this.replyUp} 
+                                    replyClick={this.innerReplys}
+                                    postInnerReply = {this.addReply} 
+                                    _item = {item}
+                                    like = {likes && likes[item.id]}
+                                    innerReply = {innerReplyStatus &&  innerReplyStatus[item.id]}
+                                    key={index}
+                        />
+            })
                                         }
                                     </ul>
                                 </div>
                             </div>
-                            <AddReply click = {this.addReply}/>
+                            <AddReply   click = {this.addReply}
+                                        loginStatus = {userInfo.loginStatus}
+                            />
                         </div>
                         <div className="col-lg-3">
-                            <Login 	click = {this.login} 
-								    loginData={userInfo.loginData} 
-								    loginStatus = {userInfo.loginStatus}
-						    />
-                            <div className="ad"></div>
+                            <Login loginData={topicContent}/>
                             <AuthorOtherTopics />
                             <ColdTopics />
                         </div>
@@ -121,10 +140,11 @@ const mapStateToProps = (state) => {
         'access' : state.userInfo.accessToken,
         'deleteTopic': state.topic.postDeleteTopic,
         'upState' : state.topic.replyUps,
-        'replies' : state.topic.topicContent &&state.topic.topicContent.replies,
-        'innerReply' : state.topic.innerReply,
+        'replies' : state.topic.topicContent && state.topic.topicContent.replies,
         'userInfo' : state.userInfo,
         'likes' : state.topic.likes,
+        'innerReplyStatus' : state.topic.innerReply,
+        'isInnerReply' : state.topic.isInnerReply,
         'upAction' : state.topic.upAction
     }
 }
@@ -134,7 +154,7 @@ const mapDispatchProps = (dispatch) => {
         fetchTopic : (topicId) => {
             dispatch(getTopicContent(topicId));
         },
-        fetchTopicReply:(topicId,access,content) => {
+        fetchTopicReply:(access,content,topicId) => {
             dispatch(addReply(access,content,topicId));
         },
         topicCollection: (access,topicId)=>{
@@ -149,9 +169,12 @@ const mapDispatchProps = (dispatch) => {
             dispatch(replyUp(true));
             dispatch(postReplyUp(access,replyId));
         },
-        innerReply : (index,bol) => {
-            dispatch(innerReply(index,bol));
-        }
+        innerReply : (replyId,bol) => {
+            dispatch(innerReply(replyId,bol));
+        },
+        login_out : (bol) => {//登出
+			dispatch(userLoginOut(bol));
+		}
     }
 }
 

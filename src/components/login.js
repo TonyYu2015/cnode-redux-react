@@ -9,6 +9,7 @@ class Login extends Component {
             'value' : "e6f04880-2ab1-4398-8178-e0898e6a8af1" 
         }
         this.change = this.change.bind(this);
+        this.userSuccess = this.userSuccess.bind(this);
     }
 
     change(event){
@@ -17,38 +18,44 @@ class Login extends Component {
         });
     }
 
-    render(){
-        if(this.props.loginData && this.props.loginStatus){
-            return (
+    userSuccess(data,isPersonal){
+        return (
                 <div>
                     <div className="panel panel-default">
                                 <div className="panel-heading">
-                                    <h3 className="panel-title">个人信息</h3>
+                                    <h3 className="panel-title">{isPersonal ? "个人信息" : "作者"}</h3>
                                 </div>
                                 <div className="panel-body">
                                     <div className="author_info">
-                                        <Link to = "/authorInfo"><img src={this.props.loginData.avatar_url} width="50px" alt=""/></Link>
-                                        <Link to = "/authorInfo">{this.props.loginData.loginname}</Link>
+                                        <Link to = {"/authorInfo?userName=" + data.loginname}>
+                                            <img src={data.avatar_url} width="50px" alt=""/>
+                                        </Link>
+                                        <Link to = {"/authorInfo?userName=" + data.loginname}>{data.loginname}</Link>
                                     </div>
-                                    <p>积分：5</p>
-                                    <p>“ 这家伙很懒，什么个性签名都没有留下。 ”</p>
                                 </div>
-                    </div>
-                    <div className="panel panel-default">
-                        <div className="panel-body">
-                            <button type="button" className="btn btn-success"><Link to= "/pubTopic">发布话题</Link></button>
-                        </div>
+                                <button style={{"display":isPersonal ? "block" : "none"}} type="button" className="btn btn-success"><Link to= "/pubTopic/pub">发布话题</Link></button>
                     </div>
                 </div>
-            )
+                )
+    }
+
+    render(){
+        if(this.props.personal){
+            if(this.props.loginStatus  && this.props.loginData ){
+                return this.userSuccess(this.props.loginData,true);
+            }else{
+                return (
+                    <div className="login">
+                        <p>通过accessToken登录</p>
+                        <input className="access" id="access" type="text" onChange={this.change} value={this.state.value} />
+                        <input className="btn" type="button" value="登录" onClick = {this.props.click}/>
+                    </div>
+                )
+            }
+
         } else {
-            return (
-                <div className="login">
-                    <p>通过accessToken登录</p>
-                    <input className="access" id="access" type="text" onChange={this.change} value={this.state.value} />
-                    <input className="btn" type="button" value="登录" onClick = {this.props.click}/>
-                </div>
-            )
+            if(!this.props.loginData) return null;
+            return this.userSuccess(this.props.loginData.author,false);
         }
         
     }

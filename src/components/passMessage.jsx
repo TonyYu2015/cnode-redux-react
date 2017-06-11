@@ -18,9 +18,9 @@ export default class PassMessage extends React.Component{
     this.props.passMessages && this.props.passMessages.map((item,index)=>{
         return (
             <li className="list-group-item" key={index}>
-                <a href="javascript:;" className="reply_user">{item.reply.id}</a>
+                <Link to = {"/authorInfo?userName=" + item.author.loginname} className="reply_user"><img src={item.author.avatar_url} width="30px"/></Link>
                 <span>&nbsp;&nbsp;回复你的话题&nbsp;&nbsp;</span>
-                <Link to={"/topic/" + item.topic.id} className="reply_title">{item.topic.title}</Link>
+                <Link to={"/topic?topicId=" + item.topic.id} className="reply_title">{item.topic.title}</Link>
             </li>
         )
     })

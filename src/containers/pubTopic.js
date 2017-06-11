@@ -5,7 +5,7 @@ import Header from "../components/header";
 import TopicCatagory from "../components/topicCatagory";
 import MarkDown from "../components/markDown";
 
-class PubReply extends React.Component {
+class PubTopic extends React.Component {
     constructor(props){
         super(props)
         this.state = {
@@ -31,16 +31,13 @@ class PubReply extends React.Component {
             return;
         }
 
-        this.setState({
-            published:true
-        });
         publish(access,this.state);
     }
 
     componentDidMount(){
         var This = this;
-        const { editTopic,topicContent } = this.props;
-        if(editTopic){
+        const {topicContent } = this.props;
+        if(this.props.match.params.status === "edit"){
             let tab;
             switch(topicContent.data.tab){
                 case 'share':
@@ -102,7 +99,7 @@ class PubReply extends React.Component {
         const { userInfo,login_out } = this.props;
         return(
             <div>
-                <Header loginStatus = {userInfo.data.success} login_out={login_out}/>
+                <Header loginStatus = {userInfo.loginStatus} login_out={login_out}/>
                 <div id="main" className="container-fluid">
                     <div className="row">
                         <div className="col-lg-9">
@@ -122,21 +119,21 @@ class PubReply extends React.Component {
 
 const mapStateToProps = (state) => {
     return {
-        'success' : state.pubTopics.success,
-        'access' : state.appReducer.userInfo.access,
-        'editTopic' : state.topicReducer.editTopic,
-        'topicContent':state.topicReducer.topicContent,
-        'userInfo' : state.appReducer.userInfo
+        'access' : state.userInfo.accessToken,
+        'topicStatus' : state.pubTopic.topicStatus,
+        'userInfo' : state.userInfo
     }
 }
 
 const mapDispatchPorps = (dispatch) => {
     return {
-        'publish' : (access,data) => {
+        publish : (access,data) => {
             dispatch(pubTopicRequest(access,data));
-        }
+        },
+        login_out : (bol) => {//登出
+			dispatch(userLoginOut(bol));
+		}
     }
 }
 
-const PubTopic = connect(mapStateToProps,mapDispatchPorps)(PubReply);
-export default PubTopic;
+export default connect(mapStateToProps,mapDispatchPorps)(PubTopic);

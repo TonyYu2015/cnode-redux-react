@@ -8,11 +8,12 @@ class Header extends Component{
 	}
 
 	//登出功能
-	loginOut(){
+	loginOut(ev){
 		let per = confirm("确认是否退出？");
 		if(per){
 			this.props.login_out(false);
 		}
+		ev.preventDefault();
 	}
 
 
@@ -23,7 +24,7 @@ class Header extends Component{
 					<ul className="main-nav">
 						<li><Link to="/">首页</Link></li>
 						<li style={{display:this.props.loginStatus ? "block" : "none"}}><Link to="/unreadMessage">未读消息</Link></li>
-						<li><a href="javascript:;" onClick={this.loginOut}>退出</a></li>
+						<li style={{display:this.props.loginStatus ? "block" : "none"}}><Link to="/" onClick={this.loginOut}>退出</Link></li>
 					</ul>
 				</div>
 			</div>
@@ -31,4 +32,4 @@ class Header extends Component{
 	}
 }
 
-module.exports = Header;
+export default Header;

@@ -19,9 +19,9 @@ ReactDOM.render(
 			<Router>
 				<div>
 					<Route exact path="/" component={Home}/>
-					<Route path="/topic/:id" component={Topic}/>
+					<Route path="/topic" component={Topic}/>
 					<Route path="/unreadMessage" component={UnreadMessage}/>
-					<Route path="/pubTopic" component={PubTopic}/>
+					<Route path="/pubTopic/:status" component={PubTopic}/>
 					<Route path="/authorInfo" component={AuthorInfo}/>
 				</div>
 			</Router>
