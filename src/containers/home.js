@@ -118,7 +118,29 @@ class Home extends Component {
 		return(
 			<div>
 				<Header loginStatus = {userInfo.loginStatus} login_out={login_out}/>
-				<div id="content" style={{padding:"20px"}}>
+				<div id="content" style={{padding:"20px 10px 0 30px"}} className="container-fluid">
+					<div className="row">
+                        <div className="col-lg-9 main-content">
+							<Picker tabClick = {this.showTheTag}
+									tabsStatus = {this.state.tabs}
+							 />
+							<Posts  posts = {posts} 
+									bol = {selectedTag}
+							/>
+							<Page 	pageNum = {pageNumNow}
+									onClick = {this.paging}
+							/>
+						</div>
+						<div className="col-lg-3 fun-modules">
+							<Login 	click = {this.login} 
+									loginData={userInfo.loginData} 
+									loginStatus = {userInfo.loginStatus}
+									personal = { true }
+							/>
+						</div>
+					</div>
+				</div>
+				{/*<div id="content" style={{padding:"20px"}}>
 					<div className="main-content">
 						<Picker tabClick = {this.showTheTag}
 								tabsStatus = {this.state.tabs}
@@ -137,7 +159,7 @@ class Home extends Component {
 						/>
 					</div>
 				</div>
-				<div id="footer"></div>
+				<div id="footer"></div>*/}
 			</div>
 		)
 	}

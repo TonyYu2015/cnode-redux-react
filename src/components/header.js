@@ -21,10 +21,10 @@ class Header extends Component{
 		return (
 			<div id="header">
 				<div className="wrapper">
-					<ul className="main-nav">
-						<li><Link to="/">首页</Link></li>
-						<li style={{display:this.props.loginStatus ? "block" : "none"}}><Link to="/unreadMessage">未读消息</Link></li>
-						<li style={{display:this.props.loginStatus ? "block" : "none"}}><Link to="/" onClick={this.loginOut}>退出</Link></li>
+					<ul className="nav nav-pills main-nav">
+						<li role="presentation" className="active"><Link to="/">首页</Link></li>
+						<li style={{display:this.props.loginStatus ? "block" : "none"}} role="presentation"><Link to="/unreadMessage">未读消息</Link></li>
+						<li style={{display:this.props.loginStatus ? "block" : "none"}} role="presentation"><Link to="/" onClick={this.loginOut}>退出</Link></li>
 					</ul>
 				</div>
 			</div>

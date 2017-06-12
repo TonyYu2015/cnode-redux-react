@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from 'react-redux';
-import { pubTopicRequest } from '../redux/actions/actions.js'
+import { pubTopicRequest,isPublishClick } from '../redux/actions/actions.js'
 import Header from "../components/header";
 import TopicCatagory from "../components/topicCatagory";
 import MarkDown from "../components/markDown";
@@ -15,11 +15,11 @@ class PubTopic extends React.Component {
             published:false
         }
         this.publishFn = this.publishFn.bind(this);
+        this.afterPublish = this.afterPublish.bind(this);
     }
 
     publishFn(){
-        const { publish,access } = this.props;
-
+        const { publish,access,publishClick } = this.props;
         if(this.state.title === ""){
             alert("标题内容不能为空哦！！！");
             return;
@@ -30,8 +30,19 @@ class PubTopic extends React.Component {
             alert("主题内容不能为空哦！！！");
             return;
         }
-
         publish(access,this.state);
+    }
+
+    afterPublish(){
+        const { isPublished,publishClick } = this.props;
+        publishClick(false);
+        if(isPublished){
+            alert("主题发布成功!!!");
+            this.props.history.push("/");
+            return null;
+        }else{
+            alert("主题发布失败!!!");
+        }
     }
 
     componentDidMount(){
@@ -55,11 +66,11 @@ class PubTopic extends React.Component {
             }
             $("#dropdownMenu1").html(tab);
             $(".topic-title").val(topicContent.data.title);
-            $(".markdown").val(topicContent.data.content.match(/<p.*>.*(?=<\/p>)/g));
+            $(".markdown").html(topicContent.data.content.match(/<p.*>.*(?=<\/p>)/g));
         }
 
         //绑定获取标题，标签，主题内容事件
-        $(".dropdown-menu").find("li").on("click",function(ev){
+        $(".dropdown-menu").find("li").on("click",function(ev){ 
             $("#dropdownMenu1").html($(this).html());
             var tag;
             switch($(this).text()){
@@ -89,14 +100,16 @@ class PubTopic extends React.Component {
 
         $(".markdown").on("blur",function(){
             This.setState({
-                content : $(this).val()
+                content : $(this).html()
             });
         });
-        
     }
 
     render(){
-        const { userInfo,login_out } = this.props;
+        const { userInfo,login_out,published } = this.props;
+        if(published){
+            this.afterPublish();
+        }
         return(
             <div>
                 <Header loginStatus = {userInfo.loginStatus} login_out={login_out}/>
@@ -121,7 +134,9 @@ const mapStateToProps = (state) => {
     return {
         'access' : state.userInfo.accessToken,
         'topicStatus' : state.pubTopic.topicStatus,
-        'userInfo' : state.userInfo
+        'userInfo' : state.userInfo,
+        'isPublished' : state.pubTopic.data && state.pubTopic.data.success,
+        'published' : state.pubTopic.published
     }
 }
 
@@ -132,7 +147,10 @@ const mapDispatchPorps = (dispatch) => {
         },
         login_out : (bol) => {//登出
 			dispatch(userLoginOut(bol));
-		}
+		},
+        publishClick : (bol) => {
+            dispatch(isPublishClick(bol));
+        }
     }
 }
 

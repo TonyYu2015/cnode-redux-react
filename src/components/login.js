@@ -45,11 +45,18 @@ class Login extends Component {
                 return this.userSuccess(this.props.loginData,true);
             }else{
                 return (
-                    <div className="login">
-                        <p>通过accessToken登录</p>
-                        <input className="access" id="access" type="text" onChange={this.change} value={this.state.value} />
-                        <input className="btn" type="button" value="登录" onClick = {this.props.click}/>
+                    <div className="panel panel-default">
+                        <div className="panel-body login">
+                            <input type="text" id="access" className="form-control " placeholder="Username" aria-describedby="basic-addon1" value={this.state.value} onChange={this.change}/>
+                            <button style={{'height': '35px','width': '100px','marginTop': '10px'}} className="btn btn-primary" onClick = {this.props.click}>登录</button>
+                        </div>
                     </div>
+
+                    // <div className="login">
+                    //     <p>通过accessToken登录</p>
+                    //     <input className="access" id="access" type="text" onChange={this.change} value={this.state.value} />
+                    //     <input className="btn" type="button" value="登录" onClick = {this.props.click}/>
+                    // </div>
                 )
             }
 

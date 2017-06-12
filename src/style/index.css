@@ -13,7 +13,7 @@ body { width: 100%; background: #E1E1E1; }
 #header .wrapper {
     width: 100%;
 }
-#header .main-nav { float: right; overflow: hidden; margin-top: 8px; }
+#header .main-nav { float: left; margin-left: 100px; overflow: hidden; margin-top: 8px; }
 #header .main-nav li  { float: left; }
 #header .main-nav li a { font-size: 13PX; display: block; padding: 10px 15px; color: #CCC; }
 #header .main-nav li a:hover { color: #fff; }

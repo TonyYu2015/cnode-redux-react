@@ -11,6 +11,7 @@ export const USER_INFO = "USER_INFO";
 export const TOPIC_CONTENT = "TOPIC_CONTENT";
 export const REPLY_INFO = "REPLY_INFO";
 export const TOPIC_PUBLISH = "TOPIC_PUBLISH";
+export const PUBLISH_CLICK = "PUBLISH_CLICK";
 export const EDIT_TOPIC = "EDIT_TOPIC";
 export const TOPIC_COLLECTION = "TOPIC_COLLECTION";//主题收藏
 export const TOPIC_COLLECTION_DATA = "TOPIC_COLLECTION_DATA";
@@ -110,6 +111,14 @@ function receivePubTopicInfo(data){
 	}
 }
 
+export function isPublishClick(bol){
+	return {
+		type : PUBLISH_CLICK,
+		bol
+	}
+	
+}
+
 export function editTopic(bol){
 	return {
 		type:EDIT_TOPIC,
@@ -128,7 +137,11 @@ export function pubTopicRequest(access,data){
 			}
 		})
 		.then((response)=>response.json(),(err)=>{throw new Error(err)})
-		.then((json)=>dispatch(receivePubTopicInfo(json)));
+		.then((json)=>{
+			dispatch(receivePubTopicInfo(json));
+			
+		})
+		.catch(err => { throw err });
 	}
 }
 
