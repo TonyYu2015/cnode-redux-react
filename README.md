@@ -26,4 +26,4 @@
 
 ##截图<br>
 ----
-![Alt text](/path/to/img.jpg)
+![Alt text](/static/images/首页.png)
