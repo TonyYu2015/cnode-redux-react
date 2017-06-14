@@ -113,7 +113,7 @@ class PubTopic extends React.Component {
         return(
             <div>
                 <Header loginStatus = {userInfo.loginStatus} login_out={login_out}/>
-                <div id="main" className="container-fluid">
+                <div id="main" style={{'padding':'15px'}} className="container-fluid">
                     <div className="row">
                         <div className="col-lg-9">
                             <div className="panel panel-default">

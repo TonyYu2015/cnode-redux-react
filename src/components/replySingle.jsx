@@ -27,7 +27,7 @@ export default class ReplySingle extends React.Component {
                 <div>
                     <p className="reply_info">
                         <Link to = {"/authorInfo?userName=" + this.props._item.author.loginname}><span>{this.props._item.author.loginname}</span></Link>
-                        <span>1楼.7小时前</span>
+                        <span style={{"marginLeft":"10px"}}>{this.props.index+1}楼.{this.props.replyTime.match(/\d{4}-\d{2}-\d{2}/g)}</span>
                         {this.replyRender()}
                     </p>
                     <p className="reply_content" dangerouslySetInnerHTML = {{__html:this.props._item.content}}>

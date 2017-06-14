@@ -12,14 +12,14 @@ class Posts extends Component {
 						let tabs = [];
 						if(post.top === true){
 							tabs.push({
-								bg:"blue",
+								bg:"#52ab80",
 								color:"white",
 								tabName:"置顶"
 							});
 						}
 						if(post.good === true){
 							tabs.push({
-								bg:"green",
+								bg:"#b16f94",
 								color:"white",
 								tabName:"精华"
 							});
@@ -28,28 +28,28 @@ class Posts extends Component {
 							switch(post.tab){
 								case "ask":
 									tabs.push({
-									bg:"#ccc",
+									bg:"#d2d0d0",
 									color:"white",
 									tabName:"问答"
 								});
 									break;
 								case "share":
 									tabs.push({
-									bg:"#ccc",
+									bg:"#d2d0d0",
 									color:"white",
 									tabName:"分享"
 								});
 									break;
 								case "job":
 									tabs.push({
-									bg:"#ccc",
+									bg:"#d2d0d0",
 									color:"white",
 									tabName:"招聘"
 								});
 									break;
 								case "dev":
 									tabs.push({
-									bg:"#ccc",
+									bg:"#d2d0d0",
 									color:"white",
 									tabName:"客户端测试"
 								});

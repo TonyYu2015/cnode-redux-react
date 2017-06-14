@@ -48,8 +48,9 @@ class Home extends Component {
 	}
 
 	componentDidMount(){
-		const { fetch,ifFetching } = this.props;
+		const { fetch,ifFetching,userInfo } = this.props;
 		fetch(ifFetching);
+		this.login();
 	}
 
 
@@ -106,7 +107,8 @@ class Home extends Component {
 		//发起验证请求
 		const { login } = this.props;
 		const access = $("#access").val();
-		if(access === ""){
+		localStorage.setItem("access",access);
+		if(access === "请输入accessToken" || ""){
 			alert("请输入accessToken!!!");
 		}else{
 			login(access);
@@ -140,26 +142,6 @@ class Home extends Component {
 						</div>
 					</div>
 				</div>
-				{/*<div id="content" style={{padding:"20px"}}>
-					<div className="main-content">
-						<Picker tabClick = {this.showTheTag}
-								tabsStatus = {this.state.tabs}
-							 />
-						<Posts  posts = {posts} bol = {selectedTag}
-							/>
-						<Page pageNum = {pageNumNow}
-							  onClick = {this.paging}
-							  />
-					</div>
-					<div className="fun-modules">
-						<Login 	click = {this.login} 
-								loginData={userInfo.loginData} 
-								loginStatus = {userInfo.loginStatus}
-								personal = { true }
-						/>
-					</div>
-				</div>
-				<div id="footer"></div>*/}
 			</div>
 		)
 	}
@@ -191,6 +173,7 @@ const mapDispatchProps = (dispatch)=>{
 			dispatch(getUserInfo(access));
 		},
 		'login_out' : (bol) => {//登出
+			localStorage.removeItem("access");
 			dispatch(userLoginOut(bol));
 		}
 	}

@@ -17,7 +17,7 @@ export default class TopicContent extends React.Component {
                         <h2>{this.props.content.title}</h2>
                         <div style = {{"overflow":"hidden"}}>
                             <p className="topic_info" style = {{"float":"left"}}>
-                                <span className="pub_time">.发布于&nbsp;{this.props.content.last_reply_at}</span>
+                                <span className="pub_time">.发布于&nbsp;{this.props.content.last_reply_at.match(/\d{4}-\d{2}-\d{2}/g)}</span>
                                 <Link   className="author_name" 
                                         to = {"/authorInfo?userName=" + this.props.content.author.loginname}>.作者&nbsp;{this.props.content.author.loginname} </Link>
                                 <span className="scan_count">.&nbsp;{this.props.content.visit_count}&nbsp;次浏览</span>

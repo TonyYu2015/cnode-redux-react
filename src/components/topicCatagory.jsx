@@ -26,9 +26,9 @@ export default class TopicCatagory extends React.Component{
                                     <li><a href="#">Separated link</a></li>*/}
                                 </ul>
                             </div>
-                            <p>提问时，请遵循 《提问的智慧》中提及的要点，以便您更接收到高质量回复。</p>
+                            {/*<p>提问时，请遵循 《提问的智慧》中提及的要点，以便您更接收到高质量回复。</p>*/}
                         </div>
-                        <div className="input-group">
+                        <div className="input-group" style={{"marginTop":"15px"}}>
                             <input type="text" className="form-control topic-title" placeholder="标题字数 10 字以上" aria-describedby="basic-addon1" />
                         </div>
                     </div>

@@ -85,7 +85,7 @@ class Topic extends React.Component {
         return(
             <div>
                 <Header loginStatus = {userInfo.loginStatus} login_out={login_out}/>
-                <div id="main" className="container-fluid">
+                <div id="main" style={{'padding':'15px'}} className="container-fluid">
                     <div className="row">
                         <div className="col-lg-9">
                             <TopicContent   content = {topicContent} 
@@ -110,6 +110,8 @@ class Topic extends React.Component {
                                     _item = {item}
                                     like = {likes && likes[item.id]}
                                     innerReply = {innerReplyStatus &&  innerReplyStatus[item.id]}
+                                    index = {index}
+                                    replyTime = {item.create_at}
                                     key={index}
                         />
             })
@@ -123,8 +125,6 @@ class Topic extends React.Component {
                         </div>
                         <div className="col-lg-3">
                             <Login loginData={topicContent}/>
-                            <AuthorOtherTopics />
-                            <ColdTopics />
                         </div>
                     </div>
                 </div>

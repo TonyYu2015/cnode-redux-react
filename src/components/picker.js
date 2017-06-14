@@ -41,7 +41,7 @@ class Picker extends Component{
 				{
 					this.props.tabsStatus.map((item,index)=>{
 						return (
-							<li key={index}><a href="javascript:;" style={{background : (item.active ? "#80BD01":"#fff"),color:(item.active ? "#fff":"#80BD01"),padding:"2px 5px",borderRadius:"10%"}} onClick = {this.props.tabClick}>{item.name}</a></li>
+							<li key={index}><a href="javascript:;" style={{background : (item.active ? "#42ccc3":"#fff"),color:(item.active ? "#fff":"#4fccbd"),padding:"2px 5px",borderRadius:"10%"}} onClick = {this.props.tabClick}>{item.name}</a></li>
 						);
 					})
 				}

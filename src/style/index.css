@@ -9,20 +9,33 @@ body { width: 100%; background: #E1E1E1; }
     width : 35px;
     border-radius: 10%;
 }
-#header { width: 100%; height: 50px; background: #444; }
+
+/*header*/
+#header { width: 100%; height: 50px; background: #fff; }
 #header .wrapper {
     width: 100%;
 }
 #header .main-nav { float: left; margin-left: 100px; overflow: hidden; margin-top: 8px; }
 #header .main-nav li  { float: left; }
-#header .main-nav li a { font-size: 13PX; display: block; padding: 10px 15px; color: #CCC; }
-#header .main-nav li a:hover { color: #fff; }
+#header .main-nav li a { 
+    font-size: 15PX; 
+    font-weight: bold;
+    display: block; 
+    margin: 0 10px;
+    padding: 10px 15px; 
+    color: #000; 
+    background-color: #fff;
+}
+#header .main-nav li a:hover {
+    color: #fff; 
+    background-color: #4fccbd;
+}
 
 #content { width: 100%; margin: 10px auto; overflow: hidden;  }
 #content .main-content { width: 78%; float: left; background: #fff; }
 #content .main-content .tags { overflow: hidden; padding: 10px;}
 #content .main-content .tags li { float: left; }
-#content .main-content .tags li a { margin: 0 10px; color: #80BD01;}
+#content .main-content .tags li a { margin: 0 10px; color: #4fccbd;}
 #content .main-content .tags li a:active { background: #80BD01; color: #fff; padding: 2px 5px; border-radius: 10%; }
 #content .main-content .lists {  }
 #content .main-content .lists li { padding: 10px; }
@@ -51,8 +64,11 @@ body { width: 100%; background: #E1E1E1; }
 #content .fun-modules { width: 20%; float: right; }
 .fun-modules .login { background: #fff; width: 100%; padding-bottom: 15px; border-radius: 20px; text-align: center; padding-top: 29px;}
 .fun-modules .login p { font: 14px '微软雅黑'; color: #606060; margin-bottom: 10px; }
-.fun-modules .login .access,.fun-modules .login .btn{ border: 2px solid #606060; border-radius: 5px; height: 25px; }
-.fun-modules .login .btn{ margin-left: 15px; cursor: pointer; }
+.fun-modules .login .access,.fun-modules .login .btn{ border: 2px solid #4fccbd; border-radius: 5px; height: 25px; }
+.fun-modules .login .btn{
+    cursor: pointer; 
+    background-color: #4fccbd;
+}
 
 .fun-modules .login img { vertical-align: middle; margin-right: 30px; margin-bottom: 10px;}
 .fun-modules .login span {font: 16px '微软雅黑'; color: #606060; }
@@ -60,3 +76,13 @@ body { width: 100%; background: #E1E1E1; }
 .wrapper { width: 1400px; margin: 0 auto; }
 
 
+/*login*/
+.login_module button {
+    width: 80%;
+    margin-bottom: 10px;
+    background-color:'#4fccbd';
+    border-color:'#4fccbd';
+}
+.login_module button a {
+    color: #fff;
+}

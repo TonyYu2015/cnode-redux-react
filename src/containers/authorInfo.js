@@ -1,9 +1,13 @@
 import React from "react";
 import { connect } from 'react-redux';
 import { Link } from "react-router-dom";
+
 import Header from "../components/header";
 import Login from "../components/login";
+import AuthorTopic from "../components/authorInfoTopics"
+
 import { getUserInfo_AC } from "../redux/actions/actions.js";
+
 
 class AuthorInfo extends React.Component{
     constructor(props){
@@ -23,7 +27,7 @@ class AuthorInfo extends React.Component{
         return (
             <div>
                 <Header loginStatus = {userInfo.loginStatus} login_out={login_out}/>
-                <div className = "container-fluid">
+                <div style={{'padding':'15px'}} className = "container-fluid">
                     <div className="row">
                         <div className="col-lg-9">
                             <div className="panel panel-default">
@@ -35,7 +39,7 @@ class AuthorInfo extends React.Component{
                                     </p>
                                     <p>{userInfo.data.score}&nbsp;积分</p>
                                     <p>{userInfo.data.githubUsername}</p>
-                                    <p>{userInfo.data.create_at}</p>
+                                    <p>注册时间：{userInfo.data.create_at.match(/\d{4}-\d{2}-\d{2}/g)}</p>
                                 </div>
                             </div>
                             <div className="panel panel-default">
@@ -43,27 +47,15 @@ class AuthorInfo extends React.Component{
                                 <div className="panel-body">
                                     <ul className="list-group">
                                         {
-        userInfo.data.recent_topics.map((item,index)=>{
-            return (
-                <li className="list-group-item" key={index}>
-                    <span className="badge">
-                        <Link to="">
-                            <span><img src={item.author.avatar_url} width="30px" alt=""/></span>
-                            <span>创建的时间</span>
-                        </Link>
-                    </span>
-                    <p>
-                        <Link to=""><img src={item.author.avatar_url} width="50px" alt=""/></Link>
-                        <span>回复数／查看数</span>
-                        <Link to="">{item.title}</Link>
-                    </p>
-                </li>
-            )
-        })
+                                userInfo.data.recent_topics.map((item,index)=>{
+                                    return (
+                                        <AuthorTopic _item = {item} key={index}/> 
+                                    )
+                                })
                                         }
                                         
                                     </ul>
-                                    <Link to="">查看更多</Link>
+                                    <Link to="/">查看更多</Link>
                                 </div>
                             </div>
                             <div className="panel panel-default">
@@ -71,25 +63,12 @@ class AuthorInfo extends React.Component{
                                 <div className="panel-body">
                                     <ul className="list-group">
                                         {
-        userInfo.data.recent_replies.map((item,index)=>{
-            return (
-                <li className="list-group-item" key={index}>
-                    <span className="badge">
-                        <Link to="">
-                            <span><img src={item.author.avatar_url} width="30px" alt=""/></span>
-                            <span>创建的时间</span>
-                        </Link>
-                    </span>
-                    <p>
-                        <Link to=""><img src={item.author.avatar_url} width="50px" alt=""/></Link>
-                        <span>回复数／查看数</span>
-                        <Link to="">{item.title}</Link>
-                    </p>
-                </li>
-            )
-        })
+                                userInfo.data.recent_replies.map((item,index)=>{
+                                    return (
+                                        <AuthorTopic _item = {item} key={index}/> 
+                                    )
+                                })
                                         }
-                                        
                                     </ul>
                                 </div>
                             </div>
@@ -114,7 +93,10 @@ const mapDispatchProps = (dispatch) => {
     return {
         getUserInfo : (userName) => {
             dispatch(getUserInfo_AC(userName));
-        }
+        },
+        login_out : (bol) => {//登出
+			dispatch(userLoginOut(bol));
+		}
     }
 }
 
