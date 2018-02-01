@@ -6,7 +6,19 @@ import Posts from '../components/posts.js';
 import Picker from '../components/picker.js';
 import Page from '../components/page.js';
 import Login from '../components/login.js';
-import { userLogin,getUserInfo,catalogySelected,showTag,tieziSelected,pageSelected,invalidateTiezi,fetchPostIfNeeded,getNewPageData,userLoginOut } from '../redux/actions/actions.js';
+import { 
+	userLogin,
+	getUserInfo,
+	catalogySelected,
+	showTag,
+	tieziSelected,
+	pageSelected,
+	invalidateTiezi,
+	fetchPostIfNeeded,
+	getNewPageData,
+	userLoginOut 
+} 
+from '../redux/actions/actions.js';
 
 class Home extends Component {
 

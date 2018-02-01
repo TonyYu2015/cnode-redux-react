@@ -2,12 +2,12 @@ import React,{ Component } from 'react';
 import { Link } from 'react-router-dom';
 
 class Login extends Component {
-    //e6f04880-2ab1-4398-8178-e0898e6a8af1
     constructor(props){
         super(props);
         this.state = {
             'value' : localStorage.getItem("access") || "请输入accessToken" 
         }
+        this.token = "e6f04880-2ab1-4398-8178-e0898e6a8af1";
         this.change = this.change.bind(this);
         this.userSuccess = this.userSuccess.bind(this);
     }
@@ -19,7 +19,6 @@ class Login extends Component {
     }
 
     userSuccess(data,isPersonal){
-        console.log(localStorage)
         return (
                 <div className="login_module">
                     <div style={{'textAlign':'center'}} className="panel panel-default">
