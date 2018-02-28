@@ -6,7 +6,7 @@ import Header from "../components/header";
 import Login from "../components/login";
 import AuthorTopic from "../components/authorInfoTopics"
 
-import { getUserInfo_AC } from "../redux/actions/actions.js";
+import { getUserInfo_AC } from "../redux/actions/actions";
 
 
 class AuthorInfo extends React.Component{

@@ -4,7 +4,7 @@ import Header from "../components/header";
 import MessageNotice from "../components/messageNotice";
 import PassMessage from "../components/passMessage";
 import Login from "../components/login";
-import { getUserMessages } from "../redux/actions/actions.js";
+import { getUserMessages } from "../redux/actions/actions";
 
 class UnreadMessage extends React.Component{
     constructor(props){

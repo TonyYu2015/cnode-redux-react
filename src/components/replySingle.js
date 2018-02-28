@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-import MarkDown from "./markDown.jsx";
+import MarkDown from "./markDown";
 
 export default class ReplySingle extends React.Component {
     constructor(props){

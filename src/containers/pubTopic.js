@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from 'react-redux';
-import { pubTopicRequest,isPublishClick } from '../redux/actions/actions.js'
+import { pubTopicRequest,isPublishClick } from '../redux/actions/actions'
 import Header from "../components/header";
 import TopicCatagory from "../components/topicCatagory";
 import MarkDown from "../components/markDown";

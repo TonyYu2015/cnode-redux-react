@@ -8,8 +8,8 @@ class Login extends Component {
         this.state = {
             'value' : localStorage.getItem("access") || "请输入accessToken" 
         }
-        this.change = this.change.bind(this);
-        this.userSuccess = this.userSuccess.bind(this);
+        // this.change = this.change.bind(this);
+        // this.userSuccess = this.userSuccess.bind(this);
     }
 
     change(event){
@@ -19,7 +19,6 @@ class Login extends Component {
     }
 
     userSuccess(data,isPersonal){
-        console.log(localStorage)
         return (
                 <div className="login_module">
                     <div style={{'textAlign':'center'}} className="panel panel-default">
@@ -52,7 +51,7 @@ class Login extends Component {
                             <button style={{'display':'inline-block','height': '35px','width': '80%','marginTop': '10px'}} className="btn btn-primary" onClick = {this.props.click}>登录</button>
                         </div>
                     </div>
-                )
+                )   
             }
 
         } else {

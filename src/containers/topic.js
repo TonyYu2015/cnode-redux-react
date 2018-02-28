@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import Header from "../components/header";
 import Login from "../components/login";
 import TopicContent from "../components/topicContent";
-import ReplySingle from "../components/replySingle.jsx";
+import ReplySingle from "../components/replySingle";
 import AddReply from "../components/addReply";
 import AuthorOtherTopics from "../components/authorOtherTopics";
 import ColdTopics from "../components/coldTopics";
@@ -19,7 +19,7 @@ class Topic extends React.Component {
         this.collection = this.collection.bind(this);
         this.deleteTopic = this.deleteTopic.bind(this);
         this.replyUp = this.replyUp.bind(this);
-        this.innerReplys = this.innerReplys.bind(this);
+        this.innerReplys = this.innerReplys.bind(this); 
     }
 
     componentDidMount(){

@@ -1,15 +1,10 @@
 import React from "react";
 
-export default class ColdTopics extends React.Component{
-    constructor(props){
-        super(props)
-    }
-
-    render(){
+export default function AuthorOtherTopics(props){
         return(
-             <div className="panel panel-default">
+            <div className="panel panel-default">
                 <div className="panel-heading">
-                    <h3 className="panel-title">无人回复的话题</h3>
+                    <h3 className="panel-title">作者其他话题</h3>
                 </div>
                 <div className="panel-body">
                     <ul className="list-group">
@@ -18,5 +13,4 @@ export default class ColdTopics extends React.Component{
                 </div>
             </div>
         )
-    }
 }

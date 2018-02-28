@@ -1,11 +1,11 @@
 import React,{ Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import Header from '../components/header.js';
-import Posts from '../components/posts.js';
-import Picker from '../components/picker.js';
-import Page from '../components/page.js';
-import Login from '../components/login.js';
+import Header from '../components/header';
+import Posts from '../components/posts';
+import Picker from '../components/picker';
+import Page from '../components/page';
+import Login from '../components/login';
 import { userLogin,getUserInfo,catalogySelected,showTag,tieziSelected,pageSelected,invalidateTiezi,fetchPostIfNeeded,getNewPageData,userLoginOut } from '../redux/actions/actions.js';
 
 class Home extends Component {
