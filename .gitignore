@@ -1,6 +1,4 @@
 node_modules
 .vscode
-<<<<<<< HEAD
 dist
-=======
->>>>>>> eff272dd0b8fa7dcc5aaa64b0017b59d821e2eec
+*.log
