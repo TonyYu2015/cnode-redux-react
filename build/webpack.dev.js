@@ -1,5 +1,6 @@
 const path = require('path');
 const webpack = require('webpack');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 module.exports=(env, argv) => {
 	 
 	return {
@@ -39,6 +40,16 @@ module.exports=(env, argv) => {
 				}
 			]
 		},
+		plugins: [
+			new webpack.DllReferencePlugin({
+				context: __dirname, 
+				manifest: path.resolve(__dirname, '../dist/vendor-manifest.json')
+			}),
+			new HtmlWebpackPlugin({
+				title: 'cnode',
+				filename: path.resolve(__dirname, '../dist/index.html')
+			})	
+		],
 		resolve : {
 			extensions : ['.css','.js','.jsx']
 		},
